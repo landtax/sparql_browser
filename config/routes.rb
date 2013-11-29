@@ -1,11 +1,8 @@
 SparqlBrowser::Application.routes.draw do
-  get "resources/index"
-  get "resources/show"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
-  # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+  root 'resources#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
@@ -15,6 +12,9 @@ SparqlBrowser::Application.routes.draw do
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
+  #
+  
+  resources :resources
 
   # Example resource route with options:
   #   resources :products do
