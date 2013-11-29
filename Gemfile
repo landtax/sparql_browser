@@ -48,3 +48,9 @@ gem 'unicorn'
 gem "sparql-client", "~> 1.0.4.1"
 gem "less-rails"
 gem "twitter-bootstrap-rails"
+
+group :development do
+  gem 'pry'
+
+
+end
