@@ -10,11 +10,10 @@ class Service < Resource::Base
   def self.query_find_by_id id
     select = "*"
     where = []
-    where << "record:#{id}  ?p ?o ."
-    where << "?o rdfs:label ?olabel ."
+    where << "record:#{id} ?p ?o ."
     where << "?p rdfs:label ?plabel ."
+    where << "optional { ?o rdfs:label ?olabel .} "
     self.construct_query(select, where.join(" \n"), nil)
   end
-
 
 end
