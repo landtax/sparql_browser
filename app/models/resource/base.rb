@@ -1,11 +1,37 @@
 require 'ostruct'
 
 class Resource::Base
-  attr_accessor :attributes, :attr_list
+  attr_accessor :id, :label, :type, :type_id, :attributes
+  attr_accessor :attr_list
 
-  def initialize(params)
-    self.attributes = OpenStruct.new(params)
-    self.attr_list = params.keys
+  def initialize(id, label, type, type_id, attributes)
+    self.id = id
+    self.label = label
+    self.type = type
+    self.type_id = type_id
+
+    initialize_attributes(attributes)
+  end
+
+  def initialize_attributes(atts)
+
+    hash = {}
+    atts.each do |att|
+      key = att.type
+
+      if hash.keys.include?(key)
+        unless hash[key].kind_of?(Array)
+          hash[key] = [hash[key]]
+        end
+        hash[key] << att
+      else
+        hash[key] = att
+      end
+
+    end
+
+    self.attr_list = hash.keys
+    self.attributes = OpenStruct.new(hash)
   end
 
   def self.find_all
@@ -13,25 +39,43 @@ class Resource::Base
   end
 
   def self.find_by_id id
-    new(solutions_to_hash(query(query_find_by_id(id))))
+    build id, query(query_find_by_id(id))
   end
 
-  def self.solutions_to_hash(solutions)
-    attributes = {}
-    solutions.each_solution do |solution|
-      key = solution[:plabel].to_s
-      value = solution[:o].to_s
+  def self.build_attribute(solution)
+    label = ""
 
-      if attributes.keys.include?(key)
-        unless attributes[key].kind_of?(Array)
-          attributes[key] = [attributes[key]]
-        end
-        attributes[key] << value
+    if solution_is_resource?(solution)
+      id = solution[:o].to_s.split("#")[1]
+      label = solution[:olabel].to_s
+    else
+      label = solution[:o].to_s
+    end
+
+    type_id = solution[:p].to_s
+    type = solution[:plabel].to_s
+
+    Resource::Base.new(id, label, type, type_id, [])
+  end
+
+  def self.build(id, solutions)
+    attributes = []
+    label = ""
+    type = ""
+    type_id = ""
+
+    solutions.each_solution do |solution|
+      if solution_is_label?(solution)
+        label = solution[:o].to_s
+      elsif solution_is_type?(solution)
+        type = solution[:olabel].to_s
+        type_id = solution[:o].to_s
       else
-        attributes[key] = value
+        attributes << build_attribute(solution)
       end
     end
-    attributes
+
+    Resource::Base.new(id, label, type, type_id, attributes)
   end
 
   protected
@@ -55,5 +99,18 @@ class Resource::Base
     [prefix, select, from, where, group_by].join("\n")
   end
 
+  def self.solution_is_resource?(solution)
+    !solution[:olabel].to_s.empty?
+  end
+
+  def self.solution_is_label?(solution)
+    solution[:p].to_s.match(/rdf-schema#label/) &&
+      solution[:plabel].to_s.empty?
+  end
+
+  def self.solution_is_type?(solution)
+    solution[:p].to_s.match(/22-rdf-syntax-ns#type/) &&
+      !solution[:olabel].to_s.empty?
+  end
 
 end

@@ -11,8 +11,8 @@ class Service < Resource::Base
     select = "*"
     where = []
     where << "record:#{id} ?p ?o ."
-    where << "?p rdfs:label ?plabel ."
-    where << "optional { ?o rdfs:label ?olabel .} "
+    where << "optional { ?p rdfs:label ?plabel . }"
+    where << "optional { ?o rdfs:label ?olabel . } "
     self.construct_query(select, where.join(" \n"), nil)
   end
 

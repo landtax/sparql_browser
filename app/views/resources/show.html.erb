@@ -1,27 +1,26 @@
-
-<h1>Service</h1>
+<h1><%= @resource.label.humanize %></h1>
+<h3><%= @resource.type.humanize %></h3>
 
 <h4>Attributes</h4>
 
 <table class="table table-hover">
 <% @resource.attr_list.each do |att| %>
 <tr>
-  <td><%= att.tableize.humanize %></td>
-  <td>
-    <% value = @resource.attributes.send(att.to_sym) %>
+  <% value = @resource.attributes.send(:"#{att}") %>
 
+  <td><%= [value].flatten.first.type %></td>
+  <td>
     <%  if value.kind_of?(Array) %>
       <ul>
         <% value.each do |v| %>
-          <li><%= v %></li>
+          <li><%= resource_value(v) %></li>
         <% end %>
       </ul>
     <% else %>
-      <%= value %>
+      <%= resource_value(value) %>
     <% end %>
-    
   </td>
 </tr>
-  <% end %>
+<% end %>
   
 </table>
