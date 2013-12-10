@@ -48,9 +48,14 @@ gem 'unicorn'
 gem "sparql-client", "~> 1.0.4.1"
 gem "less-rails"
 gem "twitter-bootstrap-rails"
+gem "rails_autolink"
 
 group :development do
   gem 'pry'
+end
 
-
+group :test do
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
+  gem 'capybara'
 end
