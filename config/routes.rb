@@ -15,6 +15,7 @@ SparqlBrowser::Application.routes.draw do
   #
   
   resources :resources
+  resources :types
 
   # Example resource route with options:
   #   resources :products do
