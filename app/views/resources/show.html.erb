@@ -8,7 +8,7 @@
 <tr>
   <% value = @resource.attributes.send(:"#{att}") %>
 
-  <td><%= [value].flatten.first.type %></td>
+  <td><%= labelize([value].flatten.first.type) %></td>
   <td>
     <%  if value.kind_of?(Array) %>
       <ul>
