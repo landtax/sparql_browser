@@ -39,11 +39,21 @@ class Resource::Base
   end
 
   def self.find_by_type(type)
-    list = query query_find_by_type(type)
+    solutions = query query_find_by_type(type)
+    build_list(solutions)
   end
 
   def self.find_by_id id
     build id, query(query_find_by_id(id))
+  end
+
+  def self.build_list(solutions)
+    solutions.map do |s| 
+      id = s[:o].to_s.split("#")[1]
+      label = s[:olabel].to_s
+      description = Resource::Base.new(nil, s[:description].to_s, "description", nil, [])
+      Resource::Base.new(id, label, nil, nil, [description] )
+    end
   end
 
   def self.build_attribute(solution)
@@ -103,10 +113,11 @@ class Resource::Base
   end
 
   def self.query_find_by_type(type)
-    select =  "?s ?slabel"
-    where = "?s rdf:type bio:#{type} ; rdfs:label ?slabel ."
+    select =  "distinct ?o ?olabel ?description"
+    where = ["?o rdf:type bio:#{type} ; rdfs:label ?olabel ."]
+    where << "OPTIONAL { ?o dc:description ?description .}" 
 
-    self.construct_query(select, where, nil)
+    self.construct_query(select, where.join(" \n"), nil)
   end
 
   def self.query(query)
@@ -119,6 +130,7 @@ class Resource::Base
     prefix = ["prefix ms: <http://gilmere.upf.edu/ms.ttl#>"]
     prefix << "prefix bio: <http://gilmere.upf.edu/bio.ttl#>"
     prefix << "prefix record: <http://gilmere.upf.edu/MetadataRecords.ttl#>"
+    prefix << "prefix dc: <http://purl.org/dc/elements/1.1/>" 
 
     select =  "SELECT #{select}"
     from =    "FROM <http://IulaClarinMetadata.edu>"

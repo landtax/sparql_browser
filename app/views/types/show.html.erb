@@ -1,12 +1,11 @@
-
-<h1>Services</h1>
+<h1><%= @type.humanize.pluralize %></h1>
 
 <table class="table table-hover">
 <% @resources.each do |resource| %>
 <tr>
-  <td><%= link_to resource[:slabel].to_s, resource_path(resource[:s].to_s.split("#")[1]) %></td>
+  <td><%= link_to resource.label, resource_path(resource.id) %></td>
+  <td> <%= resource.attributes.description.label %></td>
   <% end %>
 </tr>
-  
 </table>
 
