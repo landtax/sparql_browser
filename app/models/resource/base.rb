@@ -131,6 +131,7 @@ class Resource::Base
     prefix << "prefix bio: <http://gilmere.upf.edu/bio.ttl#>"
     prefix << "prefix record: <http://gilmere.upf.edu/MetadataRecords.ttl#>"
     prefix << "prefix dc: <http://purl.org/dc/elements/1.1/>" 
+    prefix << "prefix foaf:    <http://xmlns.com/foaf/0.1/#>" 
 
     select =  "SELECT #{select}"
     from =    "FROM <http://IulaClarinMetadata.edu>"
