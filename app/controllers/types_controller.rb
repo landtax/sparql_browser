@@ -2,7 +2,7 @@ class TypesController < ApplicationController
   before_filter :find_type
 
   def show
-    @resources = Resource::Base.find_by_type(@type)
+    @browser = Resource::Base.find_by_type(@type)
   end
 
   def show_faceted

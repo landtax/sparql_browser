@@ -1,1 +1,1 @@
-$sparql = SPARQL::Client.new("http://iula02v.upf.edu:8890/sparql")
+$sparql = SPARQL::Client.new("http://iula02v.upf.edu/sparql")

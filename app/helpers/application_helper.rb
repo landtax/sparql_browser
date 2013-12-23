@@ -6,6 +6,13 @@ module ApplicationHelper
     else
       string.camelize.titleize
     end
+  end
+
+
+  def print_solution_attribute
 
   end
+
 end
+
+

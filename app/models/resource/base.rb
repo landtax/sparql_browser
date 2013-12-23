@@ -40,7 +40,7 @@ class Resource::Base
 
   def self.find_by_type(type)
     solutions = query query_find_by_type(type)
-    build_list(solutions)
+    SolutionsBrowser.new(solutions)
   end
 
   def self.find_by_id id
@@ -113,9 +113,9 @@ class Resource::Base
   end
 
   def self.query_find_by_type(type)
-    select =  "distinct ?o ?olabel ?description"
-    where = ["?o rdf:type bio:#{type} ; rdfs:label ?olabel ."]
-    where << "OPTIONAL { ?o dc:description ?description .}" 
+    select =  "distinct ?label_id ?label ?description"
+    where = ["?label_id rdf:type bio:#{type} ; rdfs:label ?label ."]
+    where << "OPTIONAL { ?label_id dc:description ?description .}" 
 
     self.construct_query(select, where.join(" \n"), nil)
   end
