@@ -14,6 +14,7 @@ SparqlBrowser::Application.routes.draw do
   #   resources :products
   #
   
+  get 'types/:id/by/:facet_id/' => 'types#show_faceted', as: :facet
   resources :resources
   resources :types
 
