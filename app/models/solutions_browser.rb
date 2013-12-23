@@ -25,11 +25,11 @@ class SolutionsBrowser
   def relation_value_for_label(solution, label)
     return unless label_has_id? (label)
 
-    value(solution, relationize(label)).to_s.split("#")[1]
+    value(solution, relationize(label)).split("#")[1]
   end
 
   def value(solution, label)
-    solution[label]
+    solution[label].to_s
   end
 
   private

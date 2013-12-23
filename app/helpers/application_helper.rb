@@ -8,11 +8,6 @@ module ApplicationHelper
     end
   end
 
-
-  def print_solution_attribute
-
-  end
-
 end
 
 
