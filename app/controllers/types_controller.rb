@@ -13,6 +13,8 @@ class TypesController < ApplicationController
       target = Service
     when 'task'
       target = Task
+    when 'document'
+      target = Document
     end
 
     @browser = target.send(:find_all_by_facet, @facet)
