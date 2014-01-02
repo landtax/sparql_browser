@@ -15,6 +15,8 @@ class TypesController < ApplicationController
       target = Task
     when 'document'
       target = Document
+    when 'corpus'
+      target = Corpus
     end
 
     @browser = target.send(:find_all_by_facet, @facet)
