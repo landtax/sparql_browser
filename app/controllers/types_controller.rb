@@ -17,6 +17,8 @@ class TypesController < ApplicationController
       target = Document
     when 'corpus'
       target = Corpus
+    when 'lexica'
+      target = Lexica
     end
 
     @browser = target.send(:find_all_by_facet, @facet)
