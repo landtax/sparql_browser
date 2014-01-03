@@ -47,7 +47,7 @@ gem 'unicorn'
 
 gem "sparql-client", "~> 1.0.4.1"
 gem "less-rails"
-gem "twitter-bootstrap-rails"
+gem 'twitter-bootstrap-rails', github: 'seyhunak/twitter-bootstrap-rails', branch: 'bootstrap3'
 gem "rails_autolink"
 
 group :development do
