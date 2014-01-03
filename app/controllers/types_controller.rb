@@ -8,26 +8,26 @@ class TypesController < ApplicationController
   def show_faceted
     @facet = params[:facet_id]
 
-    case params[:id].downcase
+    @type = case params[:id].downcase
     when 'service'
-      target = Service
+      Service
     when 'task'
-      target = Task
+      Task
     when 'document'
-      target = Document
+      Document
     when 'corpus'
-      target = Corpus
+      Corpus
     when 'lexica'
-      target = Lexica
+      Lexica
     end
 
-    @browser = target.send(:find_all_by_facet, @facet)
+    @browser = @type.send(:find_all_by_facet, @facet)
     render :show
   end
 
   private
 
   def find_type
-    @type = params[:id]
+    @type_name = params[:id]
   end
 end

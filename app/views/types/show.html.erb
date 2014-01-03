@@ -1,4 +1,12 @@
-<h1><%= @type.humanize.pluralize %></h1>
+<div class="page-header">
+  <%= facets_for_type @type, @facet %>
+<h1><%= @type_name.humanize.pluralize %></h1>
+
+<% if @facet %>
+  <h5><%= optionize(@facet) %></h5>
+<% end %>
+
+</div>
 
 <table class="table table-hover">
 <% @browser.solutions.each do |solution| %>
