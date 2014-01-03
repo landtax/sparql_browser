@@ -22,7 +22,7 @@ class TypesController < ApplicationController
     end
 
     @browser = @type.send(:find_all_by_facet, @facet)
-    render :show
+    render :show_faceted
   end
 
   private

@@ -1,8 +1,8 @@
 module ApplicationHelper
 
   def labelize(string)
-    if string == "wsdl"
-      "WSDL"
+    if ["WSDL", "LMF"].include? string.upcase
+      string.upcase
     else
       string.camelize.titleize
     end

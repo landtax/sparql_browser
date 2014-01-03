@@ -9,4 +9,12 @@ module TypesHelper
   def optionize(value)
     "by #{value.humanize}"
   end
+
+  def link_or_value(label, id=nil)
+    if id.blank?
+      label
+    else
+      link_to labelize(label), resource_path(id)
+    end
+  end
 end

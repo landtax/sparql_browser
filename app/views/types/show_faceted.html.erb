@@ -1,0 +1,27 @@
+<div class="page-header">
+  <%= facets_for_type @type, @facet %>
+<h1><%= @type_name.humanize.pluralize %></h1>
+
+<% if @facet %>
+  <h5><%= optionize(@facet) %></h5>
+<% end %>
+
+</div>
+
+<% @browser.facets.each do |key, facet| %>
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th> <%= link_or_value facet[:label], facet[:id] %> </th>
+      </tr>
+    </thead>
+    <% facet[:solutions].each do |solution| %>
+    <tr>
+      <% @browser.labels[1..100].each do |column| %>
+        <td><%= link_or_value @browser.value(solution, column), @browser.relation_value_for_label(solution, column) %> </td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+<% end %>
+
