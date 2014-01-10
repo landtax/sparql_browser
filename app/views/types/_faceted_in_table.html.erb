@@ -1,0 +1,20 @@
+
+<% @browser.facets.each do |key, facet| %>
+  <h2 id="<%= facet[:id] %>"> <%= link_or_value facet[:label], facet[:id] %> </h2>
+      <ul class="list-group" >
+      <% facet[:solutions].each do |solution| %>
+          <li class="list-group-item">
+            <h5>
+              <% resource_id =  @browser.relation_value_for_label(solution, @browser.labels[1]) %>
+              <%= link_or_value @browser.value(solution, @browser.labels[1]), resource_id %> 
+            </h5>
+              <% @browser.labels[2..100].each do |column| %>
+                <p> <%= link_or_value(truncate(@browser.value(solution, column), length: 340,) { link_to " more", resource_path(resource_id) }, @browser.relation_value_for_label(solution, column)) %> </p>
+              <% end %>
+          </li>
+      <% end %>
+      </ul>
+
+  <hr />
+<% end %>
+

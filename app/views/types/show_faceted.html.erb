@@ -1,36 +1,31 @@
-<div class="page-header">
-  <%= facets_for_type @type, @facet %>
-<h1><%= @type_name.humanize.pluralize %></h1>
-
+<div class="row">
+  <div class="col-lg-8">
+    <h1><%= @type_name.humanize.pluralize %> <small> <%= optionize(@facet) %> </small></h1>
+  </div>
 <% if @facet %>
+  <div class="col-lg-4">
+    <p><%= facets_for_type @type, @facet %></p>
+  </div>
+<% end %>
+</div>
+
+<%= render :partial => "faceted_in_panels" %>
+
+<% content_for :sidebar do %>
+<div id="sidebar"  role="complementary">
+
+  <h4><%= @type_name.humanize.pluralize %></h4>
   <h5><%= optionize(@facet) %></h5>
+  <ul class="nav">
+    <% @browser.facets.each do |key, facet| %>
+      <li class="bs-facet-item"> <%= link_to truncate(labelize(facet[:label] ), length: 90), "##{facet[:id]}" %> </li>
+    <% end %>
+  </ul>
+</div><!--/.well -->
 <% end %>
 
-</div>
+<% content_for :header do %>
+    <h1><%= @type_name.humanize.pluralize %></h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
 
-<div class="panel panel-default">
-  <div class="panel-body">
-    Basic panel example
-  </div>
-</div>
-
-<% @browser.facets.each do |key, facet| %>
-  <div class="panel panel-default">
-    <div class="panel-heading"> <%= link_or_value facet[:label], facet[:id] %> </div>
-    <div class="panel-body">
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur</p>
-    </div>
-
-    <dl>
-        <% facet[:solutions].each do |solution| %>
-        <dt> <%= link_or_value @browser.value(solution, @browser.labels[1]), @browser.relation_value_for_label(solution, @browser.labels[1]) %> </dt>
-          <% @browser.labels[2..100].each do |column| %>
-        <dd> <%= link_or_value @browser.value(solution, column), @browser.relation_value_for_label(solution, column) %> </dd>
-          <% end %>
-      <% end %>
-    </dl>
-
-
-  </div>
 <% end %>
-

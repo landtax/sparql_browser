@@ -1,9 +1,9 @@
 <div class="page-header">
-  <%= facets_for_type @type, @facet %>
 <h1><%= @type_name.humanize.pluralize %></h1>
 
 <% if @facet %>
   <h5><%= optionize(@facet) %></h5>
+  <%= facets_for_type @type, @facet %>
 <% end %>
 
 </div>

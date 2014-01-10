@@ -2,10 +2,11 @@ class TypesController < ApplicationController
   before_filter :find_type
 
   def show
-    @browser = Resource::Base.find_by_type(@type)
+    @browser = Resource::Base.find_by_type(@type_name)
   end
 
   def show_faceted
+
     @facet = params[:facet_id]
 
     @type = case params[:id].downcase
