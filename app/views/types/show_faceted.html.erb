@@ -2,26 +2,24 @@
   <div class="col-lg-8">
     <h1><%= @type_name.humanize.pluralize %> <small> <%= optionize(@facet) %> </small></h1>
   </div>
-<% if @facet %>
-  <div class="col-lg-4">
-    <p><%= facets_for_type @type, @facet %></p>
-  </div>
-<% end %>
 </div>
 
 <%= render :partial => "faceted_in_panels" %>
 
 <% content_for :sidebar do %>
-<div id="sidebar"  role="complementary">
 
-  <h4><%= @type_name.humanize.pluralize %></h4>
-  <h5><%= optionize(@facet) %></h5>
-  <ul class="nav">
-    <% @browser.facets.each do |key, facet| %>
-      <li class="bs-facet-item"> <%= link_to truncate(labelize(facet[:label] ), length: 90), "##{facet[:id]}" %> </li>
-    <% end %>
-  </ul>
-</div><!--/.well -->
+  <div id="facets_sidebar">
+    <div class="row">
+      <p><%= facets_for_type @type, @facet %></p>
+
+      <div class="list-group">
+        <% @browser.facets.each do |key, facet| %>
+          <%= link_to(truncate(labelize(facet[:label] ), length: 90), "##{facet[:id]}", :class => "list-group-item") %>
+      <% end %>
+      </div>
+    </div>
+  </div>
+
 <% end %>
 
 <% content_for :header do %>

@@ -19,13 +19,12 @@
 <% content_for :sidebar do %>
 <div id="sidebar"  role="complementary">
 
-  <h4><%= @type_name.humanize.pluralize %></h4>
-  <h5> Sort by facet: </h5>
-  <ul class="nav">
+  <h5> List by: </h5>
+  <div class="list-group">
     <% @type.facets_available.each do |facet| %>
-      <li class="bs-facet-item"> <%= link_to facet, facet_path(@type_name, facet) %> </li>
+      <%= link_to labelize(facet), facet_path(@type_name, facet), :class => "list-group-item" %>
     <% end %>
-  </ul>
+  </div>
 </div><!--/.well -->
 <% end %>
 
