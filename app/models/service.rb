@@ -1,11 +1,26 @@
 class Service < Resource::Base
 
 
-  def self.find_all_by_facet(facet)
-    normal_facet = facet.downcase
-    return [] unless ['task', 'language'].include? normal_facet.downcase
-    solutions = self.send(:"find_all_faceted_by_#{normal_facet}")
-    SolutionsBrowser.new(solutions)
+  def self.facets_available
+    ['task', 'language']
+  end
+
+  def self.find_all_query
+    query = <<EOF
+prefix ms: <http://gilmere.upf.edu/ms.ttl#>
+prefix bio: <http://gilmere.upf.edu/bio.ttl#>
+prefix dc:  <http://purl.org/dc/elements/1.1/> 
+SELECT distinct ?service_id ?service ?description
+WHERE
+{
+ ?service_id rdf:type bio:Service ; 
+rdfs:label ?service .
+OPTIONAL { ?service_id dc:description ?description .}
+}
+
+EOF
+
+    self.query(query)
   end
 
   def self.find_all_faceted_by_task

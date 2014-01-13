@@ -1,13 +1,10 @@
 class Corpus < Resource::Base
 
-  def self.find_all_by_facet(facet)
-    normal_facet = facet.downcase
-    return [] unless ['type', 'annotation_type', 'linguality', 'language', 'funding_project'].include? normal_facet.downcase
-    solutions = self.send(:"find_all_faceted_by_#{normal_facet}")
-    SolutionsBrowser.new(solutions)
+  def self.facets_available
+    ['annotation_type', 'linguality', 'language', 'funding_project']
   end
 
-  def self.find_all_faceted_by_type
+  def self.find_all_query
     query = <<EOF
 prefix ms: <http://gilmere.upf.edu/ms.ttl#>
 prefix bio: <http://gilmere.upf.edu/bio.ttl#>
@@ -18,7 +15,6 @@ WHERE
 {?corpus_id a ?class ; rdfs:label ?corpus .
  ?class rdfs:subClassOf ms:Corpus
  } GROUP BY ?corpus_id ORDER BY ?corpus
-
 EOF
 
     self.query(query)

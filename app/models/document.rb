@@ -1,10 +1,26 @@
 class Document < Resource::Base
 
-  def self.find_all_by_facet(facet)
-    normal_facet = facet.downcase
-    return [] unless ['subject', 'related_services', 'related_resources', 'topic'].include? normal_facet.downcase
-    solutions = self.send(:"find_all_faceted_by_#{normal_facet}")
-    SolutionsBrowser.new(solutions)
+  def self.facets_available
+    ['subject', 'related_services', 'related_resources', 'topic']
+  end
+
+  def self.find_all_query
+    query = <<EOF
+prefix ms: <http://gilmere.upf.edu/ms.ttl#>
+prefix bio: <http://gilmere.upf.edu/bio.ttl#>
+prefix dc:  <http://purl.org/dc/elements/1.1/> 
+prefix test: <http://gilmere.upf.edu/MetadataRecords.ttl#>
+SELECT ?s_id ?s ?dlabel
+WHERE
+{
+ ?s_id a ?document ; rdfs:label ?s .
+ ?document rdfs:subClassOf ms:Document ; rdfs:label ?dlabel.
+}
+GROUP BY ?document ORDER BY ?dlabel
+
+EOF
+
+    self.query(query)
   end
 
   def self.find_all_faceted_by_subject

@@ -1,11 +1,5 @@
 <div class="page-header">
-<h1><%= @type_name.humanize.pluralize %></h1>
-
-<% if @facet %>
-  <h5><%= optionize(@facet) %></h5>
-  <%= facets_for_type @type, @facet %>
-<% end %>
-
+  <h1><%= @type_name.humanize.pluralize %> <small> Complete list</small></h1>
 </div>
 
 <table class="table table-hover">
@@ -18,7 +12,25 @@
       <td><%= @browser.value(solution, column) %> </td>
     <% end %>
   <% end %>
-</tr>
 <% end %>
+</tr>
 </table>
 
+<% content_for :sidebar do %>
+<div id="sidebar"  role="complementary">
+
+  <h4><%= @type_name.humanize.pluralize %></h4>
+  <h5> Sort by facet: </h5>
+  <ul class="nav">
+    <% @type.facets_available.each do |facet| %>
+      <li class="bs-facet-item"> <%= link_to facet, facet_path(@type_name, facet) %> </li>
+    <% end %>
+  </ul>
+</div><!--/.well -->
+<% end %>
+
+<% content_for :header do %>
+    <h1><%= @type_name.humanize.pluralize %></h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+
+<% end %>

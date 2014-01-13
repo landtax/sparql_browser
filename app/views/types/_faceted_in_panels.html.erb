@@ -2,7 +2,7 @@
 <% @browser.facets.each do |key, facet| %>
   <h3 id="<%= facet[:id] %>"> <%= link_or_value facet[:label], facet[:id] %> </h3>
       <ul class="list-group" >
-      <% facet[:solutions].each_with_index do |solution| %>
+      <% facet[:solutions].each do |solution| %>
           <li class="list-group-item">
             <h5>
               <% resource_id =  @browser.relation_value_for_label(solution, @browser.labels[1]) %>

@@ -4,6 +4,7 @@ class Resource::Base
   attr_accessor :id, :label, :type, :type_id, :attributes
   attr_accessor :attr_list
 
+
   def initialize(id, label, type, type_id, attributes)
     self.id = id
     self.label = label
@@ -11,6 +12,17 @@ class Resource::Base
     self.type_id = type_id
 
     initialize_attributes(attributes)
+  end
+
+  def self.find_all_by_facet(facet)
+    normal_facet = facet.downcase
+    return [] unless facets_available.include? normal_facet.downcase
+    solutions = self.send(:"find_all_faceted_by_#{normal_facet}")
+    SolutionsBrowser.new(solutions)
+  end
+
+  def self.find_all
+    SolutionsBrowser.new(self.find_all_query)
   end
 
   def initialize_attributes(atts)
@@ -34,9 +46,6 @@ class Resource::Base
     self.attributes = OpenStruct.new(hash)
   end
 
-  def self.find_all
-    list = query query_find_all
-  end
 
   def self.find_by_type(type)
     solutions = query query_find_by_type(type)

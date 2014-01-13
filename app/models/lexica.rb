@@ -1,19 +1,10 @@
 class Lexica < Resource::Base
 
-  FACETS = ['type', 'encoding_level', 'linguistic_information', 'linguality', 'language', 'standards', 'funding_project']
-
   def self.facets_available
-    FACETS
+    ['encoding_level', 'linguistic_information', 'linguality', 'language', 'standards', 'funding_project']
   end
 
-  def self.find_all_by_facet(facet)
-    normal_facet = facet.downcase
-    return [] unless FACETS.include? normal_facet.downcase
-    solutions = self.send(:"find_all_faceted_by_#{normal_facet}")
-    SolutionsBrowser.new(solutions)
-  end
-
-  def self.find_all_faceted_by_type
+  def self.find_all_query
     query = <<EOF
 prefix ms: <http://gilmere.upf.edu/ms.ttl#>
 prefix bio: <http://gilmere.upf.edu/bio.ttl#>
