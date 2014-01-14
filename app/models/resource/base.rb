@@ -46,6 +46,10 @@ class Resource::Base
     self.attributes = OpenStruct.new(hash)
   end
 
+  def self.sorted_attr_list
+    attr_list
+  end
+
 
   def self.find_by_type(type)
     solutions = query query_find_by_type(type)

@@ -1,0 +1,18 @@
+<tr>
+  <% value = @resource.attributes.send(:"#{att}") %>
+
+  <td><%= labelize([value].flatten.first.type) %></td>
+  <td>
+    <%  if value.kind_of?(Array) %>
+      <ul>
+        <% value.each do |v| %>
+          <li><%= resource_value(v) %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <%= auto_link resource_value(value) %>
+    <% end %>
+  </td>
+</tr>
+  
+

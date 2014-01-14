@@ -1,26 +1,19 @@
-<h1><%= @resource.label %></h1>
-<h3><%= @resource.type %></h3>
 
 <h4>Attributes</h4>
 
 <table class="table table-hover">
-<% @resource.attr_list.each do |att| %>
-<tr>
-  <% value = @resource.attributes.send(:"#{att}") %>
 
-  <td><%= labelize([value].flatten.first.type) %></td>
-  <td>
-    <%  if value.kind_of?(Array) %>
-      <ul>
-        <% value.each do |v| %>
-          <li><%= resource_value(v) %></li>
-        <% end %>
-      </ul>
-    <% else %>
-      <%= resource_value(value) %>
-    <% end %>
-  </td>
-</tr>
+<% @priority_attr.each do |att| %>
+  <%= render :partial => 'resource', :locals => {:att => att} if @resource.attr_list.include? att%>
 <% end %>
-  
+
+<% @attributes.each do |att| %>
+  <%= render :partial => 'resource', :locals => {:att => att} %>
+<% end %>
+
 </table>
+  
+
+<% content_for :header do %>
+  <h1><%= @resource.label %> <small> <%= @resource.type %></small></h1>
+<% end %>
