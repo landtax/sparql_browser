@@ -8,6 +8,7 @@ class ResourcesController < ApplicationController
     @priority_attr = ["Title", "resourceName", "Description", "languageName", "documentation"]
     @attributes = @resource.attr_list - @priority_attr
     @attributes.delete_if {|a| a == ""}
+    @browser_related = @resource.other_using_this_resource
   end
 end
 #["",

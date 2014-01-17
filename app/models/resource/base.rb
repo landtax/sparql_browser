@@ -105,7 +105,27 @@ class Resource::Base
     Resource::Base.new(id, label, type, type_id, attributes)
   end
 
+  def other_using_this_resource
+    query = <<EOF
+prefix ms: <http://gilmere.upf.edu/ms.ttl#>
+prefix bio: <http://gilmere.upf.edu/bio.ttl#>
+prefix dc:  <http://purl.org/dc/elements/1.1/#>
+SELECT distinct ?s_id ?s ?p_id ?p 
+WHERE {?s_id ?p_id bio:#{id} .
+?s_id rdfs:label ?s .
+?p_id rdfs:label ?p .}
+
+EOF
+
+    Rails.logger.debug(query)
+    result = $sparql.query(query)
+    SolutionsBrowser.new(result)
+  end
+
+
+
   protected
+
 
   def self.query_find_by_id id
     select = "*"
@@ -138,6 +158,7 @@ class Resource::Base
     $sparql.query(query)
   end
 
+
   def self.construct_query select, where, group_by
 
     prefix = ["prefix ms: <http://gilmere.upf.edu/ms.ttl#>"]
@@ -167,5 +188,6 @@ class Resource::Base
     solution[:p].to_s.match(/22-rdf-syntax-ns#type/) &&
       !solution[:olabel].to_s.empty?
   end
+
 
 end

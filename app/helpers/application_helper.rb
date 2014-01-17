@@ -1,14 +1,21 @@
 module ApplicationHelper
 
   def labelize(string)
-    stands = ["WSDL", "LMF", "RDF", "OWL"]
-    res = if stands.include? string.upcase
-      string.upcase
-    else
-      string.camelize.titleize
-    end
+    back_to_case(string.camelize.titleize)
+  end
 
-    res.gsub(/Lmf/, "LMF").gsub(/Wsdl/, "WSDL").gsub(/Rdf/, "RDF").gsub(/Owl/, "OWL")
+  def back_to_case(text)
+
+    result = text
+    %w( Lmf Wsdl Rdf Owl Iula Xces Nlp Html Panacea).each do |i|
+      result = result.gsub(Regexp.new("#{i}"), "#{i.upcase}")
+    end
+    {"Gr Af" => "GrAF",
+     "Ms Word" => "MS Word",
+     "Tf Idf" => "TF-IDF"}.each do |i, j|
+      result = result.gsub(Regexp.new("#{i}"), "#{j}")
+    end
+    result
   end
 
 end
