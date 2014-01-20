@@ -7,7 +7,7 @@
 <tr>
   <% @browser.labels.each do |column| %>
     <% if @browser.label_has_id? column %>
-      <td><%= link_to labelize(@browser.value(solution, column)), resource_path(@browser.relation_value_for_label(solution, column)) %> </td>
+      <td><%= link_to @browser.value(solution, column), resource_path(@browser.relation_value_for_label(solution, column)) %> </td>
     <% else %>
       <td><%= @browser.value(solution, column) %> </td>
     <% end %>
