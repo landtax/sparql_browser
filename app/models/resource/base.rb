@@ -70,6 +70,15 @@ class Resource::Base
     end
   end
 
+  def self.build_owl_attribute(solution)
+    type = solution[:p].to_s.scan(/owl#(.*$)/).flatten[0]
+    label = solution[:o].to_s
+    id = nil
+    type_id = nil
+
+    Resource::Base.new(id, label, type, type_id, [])
+  end
+
   def self.build_attribute(solution)
     label = ""
 
@@ -98,6 +107,8 @@ class Resource::Base
       elsif solution_is_type?(solution)
         type = solution[:olabel].to_s
         type_id = solution[:o].to_s
+      elsif solution_is_owl?(solution)
+        attributes << build_owl_attribute(solution)
       else
         attributes << build_attribute(solution)
       end
@@ -202,6 +213,10 @@ EOF
   def self.solution_is_type?(solution)
     solution[:p].to_s.match(/22-rdf-syntax-ns#type/) &&
       !solution[:olabel].to_s.empty?
+  end
+
+  def self.solution_is_owl?(solution)
+    solution[:p].to_s.match(/www.w3.org\/2002\/07\/owl/) 
   end
 
 
