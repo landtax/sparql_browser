@@ -25,6 +25,7 @@ class Resource::Base
     SolutionsBrowser.new(self.find_all_query)
   end
 
+
   def initialize_attributes(atts)
 
     hash = {}
@@ -114,7 +115,7 @@ prefix dc:  <http://purl.org/dc/elements/1.1/#>
 
 SELECT * {
 {
-SELECT ?s AS ?s_id ?slabel AS ?s 
+SELECT ?s AS ?s_id ?slabel AS ?s ?p AS ?p_id ?plabel AS ?p
 FROM <http://IulaClarinMetadata.edu>
 WHERE {?s ?p ms:#{id}.
 ?s rdfs:label ?slabel .
@@ -122,7 +123,7 @@ WHERE {?s ?p ms:#{id}.
 } 
 UNION 
 {
-SELECT ?bios AS ?s_id ?bioslabel AS ?s 
+SELECT ?bios AS ?s_id ?bioslabel AS ?s ?biop AS ?p_id ?bioplabel AS ?p
 FROM <http://IulaClarinMetadata.edu>
 WHERE {?bios ?biop bio:#{id}.
 ?bios rdfs:label ?bioslabel .

@@ -9,6 +9,8 @@ class ResourcesController < ApplicationController
     @attributes = @resource.attr_list - @priority_attr
     @attributes.delete_if {|a| a == ""}
     @browser_related = @resource.other_using_this_resource
+    @query = Service.query_find_by_id(params[:id])
+
   end
 end
 #["",
