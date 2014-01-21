@@ -5,6 +5,10 @@ class Service < Resource::Base
     ['task', 'language']
   end
 
+  def self.related_available
+    ["related_documentation", "related_services"]
+  end
+
   def self.find_all_query
     query = <<EOF
 prefix ms: <http://gilmere.upf.edu/ms.ttl#>
