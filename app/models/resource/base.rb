@@ -3,6 +3,7 @@ require 'ostruct'
 class Resource::Base
   attr_accessor :id, :label, :type, :type_id, :attributes
   attr_accessor :attr_list
+  cattr_accessor :descriptions
 
 
   def initialize(id, label, type, type_id, attributes)
@@ -23,6 +24,30 @@ class Resource::Base
 
   def self.find_all
     SolutionsBrowser.new(self.find_all_query)
+  end
+
+  def self.description_of(id)
+    return self.descriptions unless self.descriptions.nil?
+    query = <<EOF
+prefix ms: <http://gilmere.upf.edu/ms.ttl#>
+prefix bio: <http://gilmere.upf.edu/bio.ttl#>
+prefix dc:  <http://purl.org/dc/elements/1.1/>
+
+SELECT ?s ?label ?description
+FROM <http://IulaClarinMetadata.edu>
+WHERE {?s dc:description ?description ; rdfs:label ?label .
+}
+EOF
+    Rails.logger.debug(query)
+    result = $sparql.query(query)
+  
+    self.descriptions = {}
+    result.each do |r|
+      res_id = r[:s].to_s.split("#")[1]
+      self.descriptions[res_id] = r[:description].to_s
+    end
+
+    self.descriptions[id.to_s]
   end
 
 
@@ -89,8 +114,8 @@ class Resource::Base
       label = solution[:o].to_s
     end
 
-    type_id = solution[:p].to_s
     type = solution[:plabel].to_s
+    type_id = solution[:p].to_s
 
     Resource::Base.new(id, label, type, type_id, [])
   end
@@ -117,6 +142,22 @@ class Resource::Base
     Resource::Base.new(id, label, type, type_id, attributes)
   end
 
+  def self.query_description
+    query = <<EOF
+prefix ms: <http://gilmere.upf.edu/ms.ttl#>
+prefix bio: <http://gilmere.upf.edu/bio.ttl#>
+prefix dc:  <http://purl.org/dc/elements/1.1/#>
+
+SELECT ?description
+WHERE {ms:Corpus dc:description ?description .}
+
+EOF
+
+    Rails.logger.debug(query)
+    result = $sparql.query(query)
+    SolutionsBrowser.new(result).solutions.first[:description].to_s
+  end
+
   def other_using_this_resource
     query = <<EOF
 
@@ -126,19 +167,19 @@ prefix dc:  <http://purl.org/dc/elements/1.1/#>
 
 SELECT * {
 {
-SELECT ?s AS ?s_id ?slabel AS ?s ?p AS ?p_id ?plabel AS ?p
+SELECT ?mss as ?s_id ?msslabel as ?s ?mstype AS ?type_id ?mstypelabel AS ?type
+
 FROM <http://IulaClarinMetadata.edu>
-WHERE {?s ?p ms:#{id}.
-?s rdfs:label ?slabel .
-?p rdfs:label ?plabel .}
+WHERE {?mss ?p ms:NamedEntityRecognition ; rdfs:label ?msslabel ; rdf:type ?mstype .
+?mstype rdfs:label ?mstypelabel
+}
 } 
 UNION 
 {
-SELECT ?bios AS ?s_id ?bioslabel AS ?s ?biop AS ?p_id ?bioplabel AS ?p
+SELECT ?bios as ?s_id ?bioslabel as ?s ?biotype AS ?type_id ?biotypelabel AS ?type 
 FROM <http://IulaClarinMetadata.edu>
-WHERE {?bios ?biop bio:#{id}.
-?bios rdfs:label ?bioslabel .
-?biop rdfs:label ?bioplabel .}
+WHERE {?bios ?biop bio:NamedEntityRecognition ;rdfs:label ?bioslabel ; rdf:type ?biotype .
+?biotype rdfs:label ?biotypelabel .}
 }
 }
 EOF

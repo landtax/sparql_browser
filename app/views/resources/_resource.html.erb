@@ -1,7 +1,7 @@
 <tr>
   <% value = @resource.attributes.send(:"#{att}") %>
 
-  <td><strong><%= labelize([value].flatten.first.type) %></strong></td>
+  <td><strong><%= labelize([value].flatten.first.type) %> <%= link_to "?", "#", :title => Resource::Base.description_of(att) %></strong></td>
   <td>
     <%  if value.kind_of?(Array) %>
       <ul>
