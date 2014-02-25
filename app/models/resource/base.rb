@@ -161,6 +161,11 @@ EOF
     self.construct_query(select, where.join(" \n"), nil)
   end
 
+  def related_available
+    #overwritten by children
+    []
+  end
+
   def find_all_related
     lists = {}
     related_available.each do |r|
