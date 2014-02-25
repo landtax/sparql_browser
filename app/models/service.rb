@@ -4,6 +4,10 @@ class Service < Resource::Base
     ['task', 'language']
   end
 
+  def related_available
+    ['similar_services']
+  end
+
   def self.find_all_query
     query = <<EOF
 prefix ms: <http://gilmere.upf.edu/ms.ttl#>
@@ -40,6 +44,20 @@ EOF
     group_by = "?language ORDER BY ?language"
 
     self.query(self.construct_query select, where, group_by)
+  end
+
+  def find_all_similar_services
+    query = <<EOF
+prefix test: <http://gilmere.upf.edu/MetadataRecords.ttl#>
+prefix bio: <http://gilmere.upf.edu/bio.ttl#>
+SELECT DISTINCT ?s_id ?s
+WHERE
+{
+ test:#{id} bio:task ?task .
+ ?s_id bio:task ?task ; rdfs:label ?s .
+}
+EOF
+   SolutionsBrowser.new( Resource::Base.query(query) )
   end
 
 end
