@@ -4,7 +4,6 @@ class Resource::Base
   attr_accessor :id, :label, :type, :type_id, :attributes
   attr_accessor :attr_list
 
-
   def initialize(id, label, type, type_id, attributes)
     self.id = id
     self.label = label
@@ -25,9 +24,7 @@ class Resource::Base
     SolutionsBrowser.new(self.find_all_query)
   end
 
-
   def initialize_attributes(atts)
-
     hash = {}
     atts.each do |att|
       key = att.type
@@ -40,7 +37,6 @@ class Resource::Base
       else
         hash[key] = att
       end
-
     end
 
     self.attr_list = hash.keys
@@ -50,7 +46,6 @@ class Resource::Base
   def self.sorted_attr_list
     attr_list
   end
-
 
   def self.find_by_type(type)
     solutions = query query_find_by_type(type)
@@ -62,7 +57,7 @@ class Resource::Base
   end
 
   def self.build_list(solutions)
-    solutions.map do |s| 
+    solutions.map do |s|
       id = s[:o].to_s.split("#")[1]
       label = s[:olabel].to_s
       description = Resource::Base.new(nil, s[:description].to_s, "description", nil, [])
@@ -114,7 +109,7 @@ class Resource::Base
       end
     end
 
-    Resource::Base.new(id, label, type, type_id, attributes)
+    Resource::Factory.build(id, label, type, type_id, attributes)
   end
 
   def other_using_this_resource
@@ -126,7 +121,7 @@ prefix dc:  <http://purl.org/dc/elements/1.1/#>
 
 SELECT * {
 {
-SELECT ?s AS ?s_id ?slabel AS ?s ?p AS ?p_id ?plabel AS ?p
+SELECT ?s AS ?s_id ?slabel AS ?s
 FROM <http://IulaClarinMetadata.edu>
 WHERE {?s ?p ms:#{id}.
 ?s rdfs:label ?slabel .
@@ -134,7 +129,7 @@ WHERE {?s ?p ms:#{id}.
 } 
 UNION 
 {
-SELECT ?bios AS ?s_id ?bioslabel AS ?s ?biop AS ?p_id ?bioplabel AS ?p
+SELECT ?bios AS ?s_id ?bioslabel AS ?s 
 FROM <http://IulaClarinMetadata.edu>
 WHERE {?bios ?biop bio:#{id}.
 ?bios rdfs:label ?bioslabel .
@@ -147,11 +142,6 @@ EOF
     result = $sparql.query(query)
     SolutionsBrowser.new(result)
   end
-
-
-
-  protected
-
 
   def self.query_find_by_id id
     select = "*"
@@ -169,6 +159,14 @@ EOF
     where << "optional { ?o rdfs:label ?olabel . } "
     where << "}"
     self.construct_query(select, where.join(" \n"), nil)
+  end
+
+  def find_all_related
+    lists = {}
+    related_available.each do |r|
+      lists[r] = send(:"find_all_#{r}")
+    end
+    lists
   end
 
   def self.query_find_by_type(type)
@@ -201,6 +199,8 @@ EOF
     [prefix, select, from, where, group_by].join("\n")
   end
 
+  protected 
+
   def self.solution_is_resource?(solution)
     !solution[:olabel].to_s.empty?
   end
@@ -212,7 +212,8 @@ EOF
 
   def self.solution_is_type?(solution)
     solution[:p].to_s.match(/22-rdf-syntax-ns#type/) &&
-      !solution[:olabel].to_s.empty?
+      !solution[:olabel].to_s.empty? &&
+      solution[:o].to_s.match(/bio\.ttl#/)
   end
 
   def self.solution_is_owl?(solution)

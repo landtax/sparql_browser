@@ -2,15 +2,13 @@ require 'ostruct'
 
 class Resource::Factory
 
-
-  def self.build(type)
+  def self.build(id, label, type, type_id, atts)
      case type.downcase
      when 'service'
-       Service.new
+       Service.new(id, label, type, type_id, atts)
      when 'task'
-       Task.new
+       Task.new(id, label, type, type_id, atts)
      end
   end
-
 
 end

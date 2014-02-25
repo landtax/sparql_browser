@@ -1,27 +1,21 @@
 class Service < Resource::Base
 
-
   def self.facets_available
     ['task', 'language']
-  end
-
-  def self.related_available
-    ["related_documentation", "related_services"]
   end
 
   def self.find_all_query
     query = <<EOF
 prefix ms: <http://gilmere.upf.edu/ms.ttl#>
 prefix bio: <http://gilmere.upf.edu/bio.ttl#>
-prefix dc:  <http://purl.org/dc/elements/1.1/> 
+prefix dc:  <http://purl.org/dc/elements/1.1/>
 SELECT distinct ?service_id ?service ?description
 WHERE
 {
- ?service_id rdf:type bio:Service ; 
+ ?service_id rdf:type bio:Service ;
 rdfs:label ?service .
 OPTIONAL { ?service_id dc:description ?description .}
 }
-
 EOF
 
     self.query(query)
