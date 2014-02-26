@@ -4,11 +4,15 @@ class Document < Resource::Base
     ['subject', 'related_services', 'related_resources', 'topic']
   end
 
+  def related_available
+    ['documented_resources']
+  end
+
   def self.find_all_query
     query = <<EOF
 prefix ms: <http://gilmere.upf.edu/ms.ttl#>
 prefix bio: <http://gilmere.upf.edu/bio.ttl#>
-prefix dc:  <http://purl.org/dc/elements/1.1/> 
+prefix dc:  <http://purl.org/dc/elements/1.1/>
 prefix test: <http://gilmere.upf.edu/MetadataRecords.ttl#>
 SELECT ?s_id ?s ?dlabel
 WHERE
@@ -27,13 +31,13 @@ EOF
     query = <<EOF
 prefix dc:  <http://purl.org/dc/elements/1.1/>
 prefix dcterms:  <http://purl.org/dc/terms/>
-SELECT * { 
+SELECT * {
     {
         SELECT ?subject_id ?subject ?doc_id ?doc ?citation {
             ?doc_id dc:subject ?subject_id ; rdfs:label ?doc  ; dcterms:bibliographicCitation ?citation.
             ?subject_id rdfs:label ?subject .
         }
-    } 
+    }
 }
 EOF
 
@@ -46,7 +50,7 @@ prefix dc:  <http://purl.org/dc/elements/1.1/>
 prefix dcterms:  <http://purl.org/dc/terms/>
 prefix ms: <http://gilmere.upf.edu/ms.ttl#>
 prefix bio: <http://gilmere.upf.edu/bio.ttl#>
-SELECT * { 
+SELECT * {
     {
         SELECT ?resource AS ?page_id ?resourceLabel AS ?page ?doc AS ?document_id ?docLabel AS ?document ?docCitation AS ?citation {
             ?resource ms:documentation ?doc; rdfs:label ?resourceLabel ; a bio:Service .
@@ -57,7 +61,7 @@ SELECT * {
             ?doc dcterms:references ?ref ; rdfs:label ?docLabel ; dcterms:bibliographicCitation ?docCitation .
             ?ref rdfs:label ?refLabel ; a bio:Service .
         }
-    } 
+    }
 } GROUP BY ?page ORDER BY ?label
 EOF
 
@@ -81,7 +85,7 @@ SELECT * {  ?page_id a owl:NamedIndividual
             ?doc dcterms:references ?resource; rdfs:label ?docLabel  ; dcterms:bibliographicCitation ?docCitation.
             ?resource rdfs:label ?resourceLabel .
         }
-    } 
+    }
 FILTER
       (
         !bif:exists
@@ -112,6 +116,18 @@ GROUP BY ?topic_id ORDER BY ?topic
 EOF
 
     self.query(query)
+  end
+
+  def find_all_documented_resources
+    query = <<EOF
+prefix test: <http://gilmere.upf.edu/MetadataRecords.ttl#>
+prefix ms: <http://gilmere.upf.edu/ms.ttl#>
+SELECT ?resource_id ?resource
+WHERE {
+?resource_id ms:documentation test:#{id} ; rdfs:label ?resource.
+}
+EOF
+   SolutionsBrowser.new( Resource::Base.query(query) )
   end
 
 end

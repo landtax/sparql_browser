@@ -8,6 +8,8 @@ class Resource::Factory
        Service.new(id, label, type, type_id, atts)
      when 'task'
        Task.new(id, label, type, type_id, atts)
+     when 'document', 'article'
+       Document.new(id, label, type, type_id, atts)
      end
   end
 

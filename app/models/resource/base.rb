@@ -218,7 +218,7 @@ EOF
   def self.solution_is_type?(solution)
     solution[:p].to_s.match(/22-rdf-syntax-ns#type/) &&
       !solution[:olabel].to_s.empty? &&
-      solution[:o].to_s.match(/bio\.ttl#/)
+      ( solution[:o].to_s.match(/bio\.ttl#/) || solution[:o].to_s.match(/bibo\/#/) )
   end
 
   def self.solution_is_owl?(solution)
