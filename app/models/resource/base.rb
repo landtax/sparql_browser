@@ -3,6 +3,7 @@ require 'ostruct'
 class Resource::Base
   attr_accessor :id, :label, :type, :type_id, :attributes
   attr_accessor :attr_list
+  cattr_accessor :descriptions
 
   def initialize(id, label, type, type_id, attributes)
     self.id = id
@@ -22,6 +23,30 @@ class Resource::Base
 
   def self.find_all
     SolutionsBrowser.new(self.find_all_query)
+  end
+
+  def self.description_of(id)
+    return self.descriptions[id.to_s] unless self.descriptions.nil?
+    query = <<EOF
+prefix ms: <http://gilmere.upf.edu/ms.ttl#>
+prefix bio: <http://gilmere.upf.edu/bio.ttl#>
+prefix dc:  <http://purl.org/dc/elements/1.1/>
+
+SELECT ?s ?label ?description
+FROM <http://IulaClarinMetadata.edu>
+WHERE {?s dc:description ?description ; rdfs:label ?label .
+}
+EOF
+    Rails.logger.debug(query)
+    result = $sparql.query(query)
+  
+    self.descriptions = {}
+    result.each do |r|
+      res_id = r[:s].to_s.split("#")[1]
+      self.descriptions[res_id] = r[:description].to_s
+    end
+
+    self.descriptions[id.to_s]
   end
 
   def initialize_attributes(atts)
@@ -84,8 +109,8 @@ class Resource::Base
       label = solution[:o].to_s
     end
 
-    type_id = solution[:p].to_s
     type = solution[:plabel].to_s
+    type_id = solution[:p].to_s
 
     Resource::Base.new(id, label, type, type_id, [])
   end
@@ -142,6 +167,7 @@ EOF
     result = $sparql.query(query)
     SolutionsBrowser.new(result)
   end
+
 
   def self.query_find_by_id id
     select = "*"

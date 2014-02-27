@@ -1,7 +1,8 @@
 <tr>
   <% value = @resource.attributes.send(:"#{att}") %>
+  <% description = Resource::Base.description_of(att)%>
 
-  <td><strong><%= labelize([value].flatten.first.type) %></strong></td>
+  <td><strong><%= labelize([value].flatten.first.type) %> <%= link_to("<i class='icon-question-sign'></i>".html_safe, resource_path(att), :title => description) if description %></strong></td>
   <td>
     <%  if value.kind_of?(Array) %>
       <ul>
