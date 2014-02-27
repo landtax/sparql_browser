@@ -27,7 +27,7 @@ class Resource::Base
   end
 
   def self.description_of(id)
-    return self.descriptions unless self.descriptions.nil?
+    return self.descriptions[id.to_s] unless self.descriptions.nil?
     query = <<EOF
 prefix ms: <http://gilmere.upf.edu/ms.ttl#>
 prefix bio: <http://gilmere.upf.edu/bio.ttl#>
