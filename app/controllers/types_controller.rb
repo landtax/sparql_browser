@@ -4,6 +4,7 @@ class TypesController < ApplicationController
   def show
     @type_name = params[:id]
     @type = target(@type_name)
+    @type_description = @type.description_of @type_name
 
     @browser = @type.send(:find_all)
     render :show
