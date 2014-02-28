@@ -144,23 +144,23 @@ prefix ms: <http://gilmere.upf.edu/ms.ttl#>
 prefix bio: <http://gilmere.upf.edu/bio.ttl#>
 prefix dc:  <http://purl.org/dc/elements/1.1/#>
 
-SELECT * {
-{
-SELECT ?s AS ?s_id ?slabel AS ?s
-FROM <http://IulaClarinMetadata.edu>
-WHERE {?s ?p ms:#{id}.
-?s rdfs:label ?slabel .
-?p rdfs:label ?plabel .}
-} 
-UNION 
-{
-SELECT ?bios AS ?s_id ?bioslabel AS ?s 
-FROM <http://IulaClarinMetadata.edu>
-WHERE {?bios ?biop bio:#{id}.
-?bios rdfs:label ?bioslabel .
-?biop rdfs:label ?bioplabel .}
+ SELECT * {
+ {
+SELECT ?mss as ?s_id ?msslabel as ?s ?mstype AS ?type_id ?mstypelabel AS ?type
+
+ FROM <http://IulaClarinMetadata.edu>
+WHERE {?mss ?p ms:NamedEntityRecognition ; rdfs:label ?msslabel ; rdf:type ?mstype .
+?mstype rdfs:label ?mstypelabel
 }
-}
+ } 
+ UNION 
+ {
+SELECT ?bios as ?s_id ?bioslabel as ?s ?biotype AS ?type_id ?biotypelabel AS ?type 
+ FROM <http://IulaClarinMetadata.edu>
+WHERE {?bios ?biop bio:NamedEntityRecognition ;rdfs:label ?bioslabel ; rdf:type ?biotype .
+?biotype rdfs:label ?biotypelabel .}
+ }
+ }
 EOF
 
     Rails.logger.debug(query)
