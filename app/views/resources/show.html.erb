@@ -28,7 +28,7 @@
 
 
 <% unless @browser_other_using.solutions.empty? %>
-  <%= render :partial => "related_resource", :locals => {:resources => @browser_other_using, :title => " Other resources with related to this #{@resource.type}"} %>
+  <%= render :partial => "other_using_resource", :locals => {:resources => @browser_other_using, :title => "Related to this #{@resource.type}:"} %>
 <% end %>
 
 <% @browser_related.each do |key, browser| %>
