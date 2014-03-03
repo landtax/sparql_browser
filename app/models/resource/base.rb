@@ -39,7 +39,7 @@ WHERE {?s dc:description ?description ; rdfs:label ?label .
 EOF
     Rails.logger.debug(query)
     result = $sparql.query(query)
-  
+
     self.descriptions = {}
     result.each do |r|
       res_id = r[:s].to_s.split("#")[1]
@@ -139,26 +139,31 @@ EOF
 
   def other_using_this_resource
     query = <<EOF
-
 prefix ms: <http://gilmere.upf.edu/ms.ttl#>
 prefix bio: <http://gilmere.upf.edu/bio.ttl#>
 prefix dc:  <http://purl.org/dc/elements/1.1/#>
+prefix test: <http://gilmere.upf.edu/MetadataRecords.ttl#>
 
- SELECT * {
+ SELECT *
+     FROM <http://IulaClarinMetadata.edu>
  {
-SELECT ?mss as ?s_id ?msslabel as ?s ?mstype AS ?type_id ?mstypelabel AS ?type
-
- FROM <http://IulaClarinMetadata.edu>
-WHERE {?mss ?p ms:NamedEntityRecognition ; rdfs:label ?msslabel ; rdf:type ?mstype .
-?mstype rdfs:label ?mstypelabel
-}
- } 
- UNION 
+  {
+  SELECT ?mss as ?s_id ?msslabel as ?s ?mstype AS ?type_id ?mstypelabel AS ?type
+   WHERE {?mss ?p ms:#{id} ; rdfs:label ?msslabel ; rdf:type ?mstype .
+   ?mstype rdfs:label ?mstypelabel
+  }
+ }
+ UNION
  {
-SELECT ?bios as ?s_id ?bioslabel as ?s ?biotype AS ?type_id ?biotypelabel AS ?type 
- FROM <http://IulaClarinMetadata.edu>
-WHERE {?bios ?biop bio:NamedEntityRecognition ;rdfs:label ?bioslabel ; rdf:type ?biotype .
-?biotype rdfs:label ?biotypelabel .}
+    SELECT ?bios as ?s_id ?bioslabel as ?s ?biotype AS ?type_id ?biotypelabel AS ?type
+    WHERE {?bios ?biop bio:#{id} ;rdfs:label ?bioslabel ; rdf:type ?biotype .
+    ?biotype rdfs:label ?biotypelabel .}
+ }
+ UNION
+ {
+    SELECT ?bios as ?s_id ?bioslabel as ?s ?biotype AS ?type_id ?biotypelabel AS ?type
+    WHERE {?bios ?biop test:#{id} ;rdfs:label ?bioslabel ; rdf:type ?biotype .
+    ?biotype rdfs:label ?biotypelabel .}
  }
  }
 EOF
@@ -203,7 +208,7 @@ EOF
   def self.query_find_by_type(type)
     select =  "distinct ?label_id ?label ?description"
     where = ["?label_id rdf:type bio:#{type} ; rdfs:label ?label ."]
-    where << "OPTIONAL { ?label_id dc:description ?description .}" 
+    where << "OPTIONAL { ?label_id dc:description ?description .}"
 
     self.construct_query(select, where.join(" \n"), nil)
   end
@@ -219,8 +224,8 @@ EOF
     prefix = ["prefix ms: <http://gilmere.upf.edu/ms.ttl#>"]
     prefix << "prefix bio: <http://gilmere.upf.edu/bio.ttl#>"
     prefix << "prefix record: <http://gilmere.upf.edu/MetadataRecords.ttl#>"
-    prefix << "prefix dc: <http://purl.org/dc/elements/1.1/>" 
-    prefix << "prefix foaf:    <http://xmlns.com/foaf/0.1/#>" 
+    prefix << "prefix dc: <http://purl.org/dc/elements/1.1/>"
+    prefix << "prefix foaf:    <http://xmlns.com/foaf/0.1/#>"
 
     select =  "SELECT #{select}"
     from =    "FROM <http://IulaClarinMetadata.edu>"
@@ -230,7 +235,7 @@ EOF
     [prefix, select, from, where, group_by].join("\n")
   end
 
-  protected 
+  protected
 
   def self.solution_is_resource?(solution)
     !solution[:olabel].to_s.empty?
@@ -248,7 +253,7 @@ EOF
   end
 
   def self.solution_is_owl?(solution)
-    solution[:p].to_s.match(/www.w3.org\/2002\/07\/owl/) 
+    solution[:p].to_s.match(/www.w3.org\/2002\/07\/owl/)
   end
 
 

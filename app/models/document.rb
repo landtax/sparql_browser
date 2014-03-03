@@ -5,7 +5,7 @@ class Document < Resource::Base
   end
 
   def related_available
-    ['documented_resources']
+    [] #ok
   end
 
   def self.find_all_query
@@ -15,6 +15,7 @@ prefix bio: <http://gilmere.upf.edu/bio.ttl#>
 prefix dc:  <http://purl.org/dc/elements/1.1/>
 prefix test: <http://gilmere.upf.edu/MetadataRecords.ttl#>
 SELECT ?s_id ?s ?dlabel
+FROM <http://IulaClarinMetadata.edu>
 WHERE
 {
  ?s_id a ?document ; rdfs:label ?s .
@@ -75,6 +76,7 @@ prefix dcterms:  <http://purl.org/dc/terms/>
 prefix ms: <http://gilmere.upf.edu/ms.ttl#>
 prefix bio: <http://gilmere.upf.edu/bio.ttl#>
 SELECT * {  ?page_id a owl:NamedIndividual
+FROM <http://IulaClarinMetadata.edu>
     {
         SELECT ?resource AS ?page_id ?resourceLabel AS ?page ?doc AS ?document_id ?docLabel AS ?document  ?docCitation AS ?citation {
             ?resource ms:documentation ?doc; rdfs:label ?resourceLabel .
@@ -111,6 +113,7 @@ prefix dcterms:  <http://purl.org/dc/terms/>
 prefix ms: <http://gilmere.upf.edu/ms.ttl#>
 prefix bio: <http://gilmere.upf.edu/bio.ttl#>
 SELECT ?topic_id ?topic ?doc_id ?doc ?citation
+FROM <http://IulaClarinMetadata.edu>
 WHERE {  ?doc_id rdfs:label ?doc ; dc:subject ?topic_id ; dcterms:bibliographicCitation ?citation.  ?topic_id rdfs:label  ?topic .}
 GROUP BY ?topic_id ORDER BY ?topic
 EOF
@@ -123,6 +126,7 @@ EOF
 prefix test: <http://gilmere.upf.edu/MetadataRecords.ttl#>
 prefix ms: <http://gilmere.upf.edu/ms.ttl#>
 SELECT ?resource_id ?resource
+FROM <http://IulaClarinMetadata.edu>
 WHERE {
 ?resource_id ms:documentation test:#{id} ; rdfs:label ?resource.
 }

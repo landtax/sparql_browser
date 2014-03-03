@@ -11,6 +11,7 @@ prefix bio: <http://gilmere.upf.edu/bio.ttl#>
 prefix dc:  <http://purl.org/dc/elements/1.1/> 
 prefix test: <http://gilmere.upf.edu/MetadataRecords.ttl#>
 SELECT ?lex_id ?lex
+FROM <http://IulaClarinMetadata.edu>
 WHERE
 { ?lex_id a ms:LexicalConceptualResource ; rdfs:label ?lex .
  } GROUP BY ?lex_id ?lex ORDER BY ?lex
@@ -27,6 +28,7 @@ prefix bio: <http://gilmere.upf.edu/bio.ttl#>
 prefix dc:  <http://purl.org/dc/elements/1.1/> 
 prefix test: <http://gilmere.upf.edu/MetadataRecords.ttl#>
 SELECT ?enc_id ?enc ?lex_id ?lex ?description
+FROM <http://IulaClarinMetadata.edu>
 WHERE{
  ?lex_id a ms:LexicalConceptualResource; rdfs:label ?lex ; ms:encodingLevel ?enc_id ; dc:description ?description .
 ?enc_id rdfs:label ?enc 
@@ -44,6 +46,7 @@ prefix bio: <http://gilmere.upf.edu/bio.ttl#>
 prefix dc:  <http://purl.org/dc/elements/1.1/> 
 prefix test: <http://gilmere.upf.edu/MetadataRecords.ttl#>
 SELECT ?ling_id ?ling ?lex_id ?lex ?description
+FROM <http://IulaClarinMetadata.edu>
 WHERE{
  ?lex_id a ms:LexicalConceptualResource; rdfs:label ?lex ; ms:linguisticInformation ?ling_id ; dc:description ?description .
 ?ling_id rdfs:label ?ling 
@@ -61,6 +64,7 @@ prefix bio: <http://gilmere.upf.edu/bio.ttl#>
 prefix dc:  <http://purl.org/dc/elements/1.1/> 
 prefix test: <http://gilmere.upf.edu/MetadataRecords.ttl#>
 SELECT ?linguality_id ?linguality ?lex_id ?lex ?description
+FROM <http://IulaClarinMetadata.edu>
 WHERE{
  ?lex_id a ms:LexicalConceptualResource ; rdfs:label ?lex ; ms:linguality ?linguality_id ; dc:description ?description .
 ?linguality_id rdfs:label ?linguality
@@ -78,6 +82,7 @@ prefix bio: <http://gilmere.upf.edu/bio.ttl#>
 prefix dc:  <http://purl.org/dc/elements/1.1/> 
 prefix test: <http://gilmere.upf.edu/MetadataRecords.ttl#>
 SELECT ?lang ?lex_id ?lex ?description
+FROM <http://IulaClarinMetadata.edu>
 WHERE{
  ?lex_id a ms:LexicalConceptualResource  ; rdfs:label ?lex ; ms:languageId ?lang ; dc:description ?description .
 } GROUP BY ?lang ORDER BY ?lang
@@ -93,6 +98,7 @@ prefix bio: <http://gilmere.upf.edu/bio.ttl#>
 prefix dc:  <http://purl.org/dc/elements/1.1/> 
 prefix test: <http://gilmere.upf.edu/MetadataRecords.ttl#>
 SELECT ?ling_id ?ling ?lex_id ?lex ?description
+FROM <http://IulaClarinMetadata.edu>
 WHERE{
  ?lex_id a ms:LexicalConceptualResource; rdfs:label ?lex ; ms:conformanceToStandardsBestPractices ?ling_id ; dc:description ?description .
 ?ling_id rdfs:label ?ling 
@@ -110,6 +116,7 @@ prefix bio: <http://gilmere.upf.edu/bio.ttl#>
 prefix dc:  <http://purl.org/dc/elements/1.1/> 
 prefix test: <http://gilmere.upf.edu/MetadataRecords.ttl#>
 SELECT ?funding_project_id ?funding_project ?lex_id ?lex ?description
+FROM <http://IulaClarinMetadata.edu>
 WHERE{
  ?lex_id a ms:LexicalConceptualResource ; rdfs:label ?lex ; ms:fundingProject ?funding_project_id ; dc:description ?description .
 ?funding_project_id rdfs:label ?funding_project

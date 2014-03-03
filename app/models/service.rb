@@ -5,7 +5,7 @@ class Service < Resource::Base
   end
 
   def related_available
-    ['similar_services']
+    ['similar_services'] #ok
   end
 
   def self.find_all_query
@@ -14,6 +14,7 @@ prefix ms: <http://gilmere.upf.edu/ms.ttl#>
 prefix bio: <http://gilmere.upf.edu/bio.ttl#>
 prefix dc:  <http://purl.org/dc/elements/1.1/>
 SELECT distinct ?service_id ?service ?description
+FROM <http://IulaClarinMetadata.edu>
 WHERE
 {
  ?service_id rdf:type bio:Service ;
@@ -51,6 +52,7 @@ EOF
 prefix test: <http://gilmere.upf.edu/MetadataRecords.ttl#>
 prefix bio: <http://gilmere.upf.edu/bio.ttl#>
 SELECT DISTINCT ?s_id ?s
+FROM <http://IulaClarinMetadata.edu>
 WHERE
 {
  test:#{id} bio:task ?task .

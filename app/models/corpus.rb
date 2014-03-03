@@ -11,6 +11,7 @@ prefix bio: <http://gilmere.upf.edu/bio.ttl#>
 prefix dc:  <http://purl.org/dc/elements/1.1/> 
 prefix test: <http://gilmere.upf.edu/MetadataRecords.ttl#>
 SELECT ?corpus_id ?corpus
+FROM <http://IulaClarinMetadata.edu>
 WHERE
 {?corpus_id a ?class ; rdfs:label ?corpus .
  ?class rdfs:subClassOf ms:Corpus
@@ -27,6 +28,7 @@ prefix bio: <http://gilmere.upf.edu/bio.ttl#>
 prefix dc:  <http://purl.org/dc/elements/1.1/> 
 prefix test: <http://gilmere.upf.edu/MetadataRecords.ttl#>
 SELECT ?annotation_id ?annotation ?corpus_id ?corpus  ?description
+FROM <http://IulaClarinMetadata.edu>
 WHERE{
  ?corpus_id a ?class ; rdfs:label ?corpus ; ms:annotationType ?annotation_id  ; dc:description ?description .
  ?class rdfs:subClassOf ms:Corpus .
@@ -45,6 +47,7 @@ prefix bio: <http://gilmere.upf.edu/bio.ttl#>
 prefix dc:  <http://purl.org/dc/elements/1.1/> 
 prefix test: <http://gilmere.upf.edu/MetadataRecords.ttl#>
 SELECT ?linguality_id ?linguality ?corpus_id ?corpus ?description
+FROM <http://IulaClarinMetadata.edu>
 WHERE{
  ?corpus_id a ?class ; rdfs:label ?corpus ; ms:linguality ?linguality_id ; dc:description ?description .
  ?class rdfs:subClassOf ms:Corpus .
@@ -63,6 +66,7 @@ prefix bio: <http://gilmere.upf.edu/bio.ttl#>
 prefix dc:  <http://purl.org/dc/elements/1.1/> 
 prefix test: <http://gilmere.upf.edu/MetadataRecords.ttl#>
 SELECT ?lang ?corpus_id ?corpus ?description 
+FROM <http://IulaClarinMetadata.edu>
 WHERE{
  ?corpus_id a ?class ; rdfs:label ?corpus ; ms:languageId ?lang ; dc:description ?description .
  ?class rdfs:subClassOf ms:Corpus .
@@ -80,6 +84,7 @@ prefix bio: <http://gilmere.upf.edu/bio.ttl#>
 prefix dc:  <http://purl.org/dc/elements/1.1/> 
 prefix test: <http://gilmere.upf.edu/MetadataRecords.ttl#>
 SELECT ?funding_project_id ?funding_project ?corpus_id ?corpus ?description
+FROM <http://IulaClarinMetadata.edu>
 WHERE{
  ?corpus_id a ?class ; rdfs:label ?corpus ; ms:fundingProject ?funding_project_id ; dc:description ?description  .
  ?class rdfs:subClassOf ms:Corpus .
