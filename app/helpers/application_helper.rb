@@ -7,7 +7,7 @@ module ApplicationHelper
   def back_to_case(text)
 
     result = text
-    %w( Lmf Wsdl Rdf Owl Iula Xces Nlp Html Panacea Pdf Xml Txt Tgz Cqp).each do |i|
+    %w( Lmf Wsdl Rdf Owl Iula Xces Nlp Html Panacea Pdf Xml Txt Tgz Cqp Dcr).each do |i|
       result = result.gsub(Regexp.new("#{i}"), "#{i.upcase}")
     end
     {"Gr Af" => "GrAF",
