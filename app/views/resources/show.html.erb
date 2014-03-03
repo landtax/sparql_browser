@@ -15,7 +15,7 @@
     <td><strong>Type</strong></td>
     <td><%= @resource.type %> </td>
   </tr>
-  <% @priority_attr.each do |att| %>
+  <% @resource.priority_attr.each do |att| %>
     <%= render :partial => 'resource', :locals => {:att => att} if @resource.attr_list.include? att%>
   <% end %>
 

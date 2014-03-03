@@ -14,6 +14,18 @@ class Resource::Base
     initialize_attributes(attributes)
   end
 
+  def priority_attr
+    ["Title", "resourceName", "Description", "languageName", "documentation"]
+  end
+
+  def non_priority_attr
+    attr_list - priority_attr - banned_attr - [""]
+  end
+
+  def banned_attr
+    []
+  end
+
   def self.find_all_by_facet(facet)
     normal_facet = facet.downcase
     return [] unless facets_available.include? normal_facet.downcase
