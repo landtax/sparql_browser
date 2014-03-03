@@ -75,8 +75,9 @@ prefix dc:  <http://purl.org/dc/elements/1.1/>
 prefix dcterms:  <http://purl.org/dc/terms/>
 prefix ms: <http://gilmere.upf.edu/ms.ttl#>
 prefix bio: <http://gilmere.upf.edu/bio.ttl#>
-SELECT * {  ?page_id a owl:NamedIndividual
+SELECT * 
 FROM <http://IulaClarinMetadata.edu>
+{  ?page_id a owl:NamedIndividual
     {
         SELECT ?resource AS ?page_id ?resourceLabel AS ?page ?doc AS ?document_id ?docLabel AS ?document  ?docCitation AS ?citation {
             ?resource ms:documentation ?doc; rdfs:label ?resourceLabel .
