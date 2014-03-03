@@ -5,7 +5,7 @@ class Service < Resource::Base
   end
 
   def related_available
-    ['similar_services'] #ok
+    ['similar_services']
   end
 
   def self.find_all_query

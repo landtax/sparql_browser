@@ -4,11 +4,6 @@ class Task < Resource::Base
     ['project', 'service']
   end
 
-  def related_available
-    []
-  end
-
-
   def self.find_all_query
     query = <<EOF
 prefix ms: <http://gilmere.upf.edu/ms.ttl#>

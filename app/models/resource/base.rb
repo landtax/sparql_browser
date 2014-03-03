@@ -193,7 +193,7 @@ EOF
   end
 
   def related_available
-    #overwritten by children
+    #overwritten by children when needed
     []
   end
 

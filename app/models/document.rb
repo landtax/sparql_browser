@@ -4,10 +4,6 @@ class Document < Resource::Base
     ['subject', 'related_services', 'related_resources', 'topic']
   end
 
-  def related_available
-    [] #ok
-  end
-
   def self.find_all_query
     query = <<EOF
 prefix ms: <http://gilmere.upf.edu/ms.ttl#>
