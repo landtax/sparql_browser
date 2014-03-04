@@ -35,7 +35,7 @@ EOF
      when 'document'
        Document.new(id, label, type, type_id, atts)
      else
-        Resource::Base.new(id, label, type, type_id, atts)
+       Resource::Base.new(id, label, type, type_id, atts)
      end
   end
 

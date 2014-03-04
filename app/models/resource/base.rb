@@ -183,9 +183,7 @@ prefix test: <http://gilmere.upf.edu/MetadataRecords.ttl#>
  }
 EOF
 
-    Rails.logger.debug(query)
-    result = $sparql.query(query)
-    SolutionsBrowser.new(result)
+    SolutionsBrowser.new( Resource::Base.query(query) )
   end
 
 
