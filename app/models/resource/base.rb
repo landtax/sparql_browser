@@ -37,8 +37,7 @@ class Resource::Base
     SolutionsBrowser.new(self.find_all_query)
   end
 
-  def self.description_of(id)
-    return self.descriptions[id.to_s] unless self.descriptions.nil?
+  def self.fetch_descriptions
     query = <<EOF
 prefix ms: <http://gilmere.upf.edu/ms.ttl#>
 prefix bio: <http://gilmere.upf.edu/bio.ttl#>
@@ -49,16 +48,20 @@ FROM <http://IulaClarinMetadata.edu>
 WHERE {?s dc:description ?description ; rdfs:label ?label .
 }
 EOF
-    Rails.logger.debug(query)
-    result = $sparql.query(query)
+    Resource::Base.query(query)
+  end
 
-    self.descriptions = {}
-    result.each do |r|
-      res_id = r[:s].to_s.split("#")[1]
-      self.descriptions[res_id] = r[:description].to_s
+  def self.description_of(id)
+    all_descriptions = $sparql_cache.fetch('descriptions') do
+      descriptions = {}
+      self.fetch_descriptions.each do |r|
+        res_id = r[:s].to_s.split("#")[1]
+        descriptions[res_id] = r[:description].to_s
+      end
+      descriptions
     end
 
-    self.descriptions[id.to_s]
+    all_descriptions[id.to_s]
   end
 
   def initialize_attributes(atts)

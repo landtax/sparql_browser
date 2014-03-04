@@ -32,7 +32,7 @@ EOF
        Lexica.new(id, label, type, type_id, atts)
      when 'corpus'
        Corpus.new(id, label, type, type_id, atts)
-     when 'document', 
+     when 'document'
        Document.new(id, label, type, type_id, atts)
      else
         Resource::Base.new(id, label, type, type_id, atts)
