@@ -28,7 +28,9 @@ EOF
     query = <<EOF
 prefix dc:  <http://purl.org/dc/elements/1.1/>
 prefix dcterms:  <http://purl.org/dc/terms/>
-SELECT * {
+SELECT *
+FROM <http://IulaClarinMetadata.edu>
+{
     {
         SELECT ?subject_id ?subject ?doc_id ?doc ?citation {
             ?doc_id dc:subject ?subject_id ; rdfs:label ?doc  ; dcterms:bibliographicCitation ?citation.
@@ -47,7 +49,9 @@ prefix dc:  <http://purl.org/dc/elements/1.1/>
 prefix dcterms:  <http://purl.org/dc/terms/>
 prefix ms: <http://gilmere.upf.edu/ms.ttl#>
 prefix bio: <http://gilmere.upf.edu/bio.ttl#>
-SELECT * {
+SELECT *
+FROM <http://IulaClarinMetadata.edu>
+ {
     {
         SELECT ?resource AS ?page_id ?resourceLabel AS ?page ?doc AS ?document_id ?docLabel AS ?document ?docCitation AS ?citation {
             ?resource ms:documentation ?doc; rdfs:label ?resourceLabel ; a bio:Service .
