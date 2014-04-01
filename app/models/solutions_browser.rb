@@ -55,12 +55,11 @@ class SolutionsBrowser
       key = facet_name(s)
       if myfacets[key].nil?
         myfacets[key] = {:label => key, :id => facet_id(s), :solutions => []}
-      else
-        myfacets[key][:solutions] << s
       end
+      myfacets[key][:solutions] << s
     end
 
-   myfacets 
+   myfacets
   end
 
   private
