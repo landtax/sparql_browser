@@ -1,5 +1,13 @@
 class Document < Resource::Base
 
+  def priority_attr
+    %w{ Title Creator "Bibliographic Citation" sameAs subject References identifier }
+  end
+
+  def banned_attr
+    %w{name type}
+  end
+
   def self.facets_available
     ['subject', 'related_services', 'related_resources', 'topic']
   end

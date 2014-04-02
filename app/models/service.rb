@@ -1,5 +1,13 @@
 class Service < Resource::Base
 
+  def priority_attr
+    %w{resourceName Description task documentation languageName serviceProvider serviceTechnology fundingProject input output demoInvocation endpoint WSDL}
+  end
+
+  def banned_attr
+    %w{name type languageCode}
+  end
+
   def self.facets_available
     ['task', 'language']
   end

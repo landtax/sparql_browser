@@ -1,5 +1,13 @@
 class Task < Resource::Base
 
+  def priority_attr
+    %w{Description}
+  end
+
+  def banned_attr
+    %w{name type}
+  end
+
   def self.facets_available
     ['project', 'service']
   end
@@ -28,7 +36,7 @@ prefix ms: <http://gilmere.upf.edu/ms.ttl#>
 prefix bio: <http://gilmere.upf.edu/bio.ttl#>
 prefix dc:  <http://purl.org/dc/elements/1.1/>
 prefix foaf:    <http://xmlns.com/foaf/0.1/#>
-SELECT ?project_id ?task_id ?task ?description
+SELECT ?task_id ?task ?description
 FROM <http://IulaClarinMetadata.edu>
 WHERE { ?project dc:subject ?task_id ; rdf:type foaf:Project ; dc:description ?description .
 ?task_id rdf:type bio:Task ; rdfs:label ?task .}

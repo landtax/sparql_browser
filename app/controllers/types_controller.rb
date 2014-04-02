@@ -11,7 +11,6 @@ class TypesController < ApplicationController
   end
 
   def show_faceted
-
     @facet = params[:facet_id]
     @type = target(@type_name)
     @type_name = params[:id]

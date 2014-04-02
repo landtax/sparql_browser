@@ -1,5 +1,13 @@
 class Corpus < Resource::Base
 
+  def priority_attr
+    %w{ resourceName Description type languageName documentation resourceCreator fundingProject contactPerson  identfier url linguality annotationType segmentationLevel }
+  end
+
+  def banned_attr
+    %w{ name languageCode resourceShortName language metashareId }
+  end
+
   def self.facets_available
     ['annotation_type', 'linguality', 'language', 'funding_project']
   end

@@ -18,12 +18,12 @@ class Resource::Base
     ["Title", "resourceName", "Description", "languageName", "documentation"]
   end
 
-  def non_priority_attr
-    attr_list - priority_attr - banned_attr - [""]
-  end
-
   def banned_attr
     []
+  end
+
+  def non_priority_attr
+    attr_list - priority_attr - banned_attr - [""]
   end
 
   def self.find_all_by_facet(facet)
@@ -93,7 +93,7 @@ EOF
   end
 
   def self.find_by_id id
-    build id, query(query_find_by_id(id))
+    self.build id, query(query_find_by_id(id))
   end
 
   def self.build_list(solutions)
