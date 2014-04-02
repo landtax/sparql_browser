@@ -2,6 +2,7 @@ SparqlBrowser::Application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
+  get '/', to: redirect('/types/Service')
   root 'resources#index'
 
   # Example of regular route:
