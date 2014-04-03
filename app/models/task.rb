@@ -14,11 +14,9 @@ class Task < Resource::Base
 
   def self.find_all_query
     query = <<EOF
-prefix ms: <http://gilmere.upf.edu/ms.ttl#>
-prefix bio: <http://gilmere.upf.edu/bio.ttl#>
-prefix dc:  <http://purl.org/dc/elements/1.1/>
+    #{namespaces}
 SELECT distinct ?task_id ?task ?description
-FROM <http://IulaClarinMetadata.edu>
+    #{from}
 WHERE
 {
  ?task_id rdf:type bio:Task ;
@@ -32,12 +30,9 @@ EOF
 
   def self.find_all_faceted_by_project
     query = <<EOF
-prefix ms: <http://gilmere.upf.edu/ms.ttl#>
-prefix bio: <http://gilmere.upf.edu/bio.ttl#>
-prefix dc:  <http://purl.org/dc/elements/1.1/>
-prefix foaf:    <http://xmlns.com/foaf/0.1/#>
+    #{namespaces}
 SELECT ?task_id ?task ?description
-FROM <http://IulaClarinMetadata.edu>
+    #{from}
 WHERE { ?project dc:subject ?task_id ; rdf:type foaf:Project ; dc:description ?description .
 ?task_id rdf:type bio:Task ; rdfs:label ?task .}
 GROUP BY ?task_id
@@ -47,11 +42,9 @@ EOF
 
   def self.find_all_faceted_by_service
     query = <<EOF
-prefix ms: <http://gilmere.upf.edu/ms.ttl#>
-prefix bio: <http://gilmere.upf.edu/bio.ttl#>
-prefix dc:  <http://purl.org/dc/elements/1.1/#>
+    #{namespaces}
 SELECT ?service_id ?service
-FROM <http://IulaClarinMetadata.edu>
+    #{from}
 WHERE { ?s bio:task ?service_id ; rdf:type bio:Service. ?service_id rdfs:label ?service .}
 GROUP BY ?service_id ?service
 EOF
@@ -60,11 +53,9 @@ EOF
 
   def find_all_related_documentation
     query = <<EOF
-prefix ms: <http://gilmere.upf.edu/ms.ttl#>
-prefix bio: <http://gilmere.upf.edu/bio.ttl#>
-prefix dc:  <http://purl.org/dc/elements/1.1/>
+    #{Resource::Base.namespaces}
 SELECT distinct ?s_id ?s ?dlabel
-FROM <http://IulaClarinMetadata.edu>
+    #{Resource::Base.from}
 WHERE
 { ?s_id a ?document ; dc:subject bio:#{label} ; rdfs:label ?s .
  ?document rdfs:subClassOf ms:Document ; rdfs:label ?dlabel .
@@ -75,10 +66,9 @@ EOF
 
   def find_all_related_services
     query = <<EOF
-prefix ms: <http://gilmere.upf.edu/ms.ttl#>
-prefix bio: <http://gilmere.upf.edu/bio.ttl#>
+    #{Resource::Base.namespaces}
 SELECT distinct ?s_id ?s
-FROM <http://IulaClarinMetadata.edu>
+    #{Resource::Base.from}
 WHERE
 {
  ?s_id bio:task bio:#{label} ; rdfs:label ?s .

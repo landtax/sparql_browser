@@ -14,14 +14,9 @@ class Lexica < Resource::Base
 
   def self.find_all_query
     query = <<EOF
-prefix ms: <http://gilmere.upf.edu/ms.ttl#>
-prefix bio: <http://gilmere.upf.edu/bio.ttl#>
-prefix dc:  <http://purl.org/dc/elements/1.1/> 
-prefix test: <http://gilmere.upf.edu/MetadataRecords.ttl#>
-prefix browser: <http://browser.upf/browser#>
-
+    #{namespaces}
 SELECT ?lex_id ?lex ?description
-FROM <http://IulaClarinMetadata.edu>
+    #{from}
 WHERE{
  ?lex_id a ?class ; rdfs:label ?lex ; dc:description ?description .
 ?class browser:topNode ms:LexicalConceptualResource . 
@@ -34,14 +29,9 @@ EOF
 
   def self.find_all_faceted_by_encoding_level
     query = <<EOF
-prefix ms: <http://gilmere.upf.edu/ms.ttl#>
-prefix bio: <http://gilmere.upf.edu/bio.ttl#>
-prefix dc:  <http://purl.org/dc/elements/1.1/> 
-prefix test: <http://gilmere.upf.edu/MetadataRecords.ttl#>
-prefix browser: <http://browser.upf/browser#>
-
+    #{namespaces}
 SELECT ?enc_id ?enc ?lex_id ?lex ?description
-FROM <http://IulaClarinMetadata.edu>
+    #{from}
 WHERE{
  ?lex_id a ?class ; rdfs:label ?lex ; ms:encodingLevel ?enc_id ; dc:description ?description .
 ?class browser:topNode ms:LexicalConceptualResource . 
@@ -55,14 +45,9 @@ EOF
 
   def self.find_all_faceted_by_linguistic_information
     query = <<EOF
-prefix ms: <http://gilmere.upf.edu/ms.ttl#>
-prefix bio: <http://gilmere.upf.edu/bio.ttl#>
-prefix dc:  <http://purl.org/dc/elements/1.1/> 
-prefix test: <http://gilmere.upf.edu/MetadataRecords.ttl#>
-prefix browser: <http://browser.upf/browser#>
-
+    #{namespaces}
 SELECT ?ling_id ?ling ?lex_id ?lex ?description
-FROM <http://IulaClarinMetadata.edu>
+    #{from}
 WHERE{
  ?lex_id a ?class ; rdfs:label ?lex ; ms:linguisticInformation ?ling_id ; dc:description ?description .
 ?ling_id rdfs:label ?ling .
@@ -76,14 +61,10 @@ EOF
 
   def self.find_all_faceted_by_linguality
     query = <<EOF
-prefix ms: <http://gilmere.upf.edu/ms.ttl#>
-prefix bio: <http://gilmere.upf.edu/bio.ttl#>
-prefix dc:  <http://purl.org/dc/elements/1.1/> 
-prefix test: <http://gilmere.upf.edu/MetadataRecords.ttl#>
-prefix browser: <http://browser.upf/browser#>
+    #{namespaces}
 
 SELECT ?linguality_id ?linguality ?lex_id ?lex ?description
-FROM <http://IulaClarinMetadata.edu>
+    #{from}
 WHERE{
  ?lex_id a ?class ; rdfs:label ?lex ; ms:linguality ?linguality_id ; dc:description ?description .
 ?linguality_id rdfs:label ?linguality .
@@ -97,14 +78,9 @@ EOF
 
   def self.find_all_faceted_by_language
     query = <<EOF
-prefix ms: <http://gilmere.upf.edu/ms.ttl#>
-prefix bio: <http://gilmere.upf.edu/bio.ttl#>
-prefix dc:  <http://purl.org/dc/elements/1.1/> 
-prefix test: <http://gilmere.upf.edu/MetadataRecords.ttl#>
-prefix browser: <http://browser.upf/browser#>
-
+    #{namespaces}
 SELECT ?lang ?lex_id ?lex ?description
-FROM <http://IulaClarinMetadata.edu>
+    #{from}
 WHERE{
  ?lex_id a ?class  ; rdfs:label ?lex ; ms:languageId ?lang ; dc:description ?description .
 ?class browser:topNode ms:LexicalConceptualResource .
@@ -116,14 +92,10 @@ EOF
 
   def self.find_all_faceted_by_standards
     query = <<EOF
-prefix ms: <http://gilmere.upf.edu/ms.ttl#>
-prefix bio: <http://gilmere.upf.edu/bio.ttl#>
-prefix dc:  <http://purl.org/dc/elements/1.1/> 
-prefix test: <http://gilmere.upf.edu/MetadataRecords.ttl#>
-prefix browser: <http://browser.upf/browser#>
+    #{namespaces}
 
 SELECT ?ling_id ?ling ?lex_id ?lex ?description
-FROM <http://IulaClarinMetadata.edu>
+    #{from}
 WHERE{
  ?lex_id a ?class ; rdfs:label ?lex ; ms:conformanceToStandardsBestPractices ?ling_id ; dc:description ?description .
 ?ling_id rdfs:label ?ling .
@@ -137,14 +109,9 @@ EOF
 
   def self.find_all_faceted_by_funding_project
     query = <<EOF
-prefix ms: <http://gilmere.upf.edu/ms.ttl#>
-prefix bio: <http://gilmere.upf.edu/bio.ttl#>
-prefix dc:  <http://purl.org/dc/elements/1.1/> 
-prefix test: <http://gilmere.upf.edu/MetadataRecords.ttl#>
-prefix browser: <http://browser.upf/browser#>
-
+    #{namespaces}
 SELECT ?project_id ?project ?lex_id ?lex ?description
-FROM <http://IulaClarinMetadata.edu>
+    #{from}
 WHERE{
  ?lex_id a ?class ; rdfs:label ?lex ; ms:fundingProject ?project_id ; dc:description ?description .
 ?project_id rdfs:label ?project.

@@ -39,12 +39,9 @@ class Resource::Base
 
   def self.fetch_descriptions
     query = <<EOF
-prefix ms: <http://gilmere.upf.edu/ms.ttl#>
-prefix bio: <http://gilmere.upf.edu/bio.ttl#>
-prefix dc:  <http://purl.org/dc/elements/1.1/>
-
+    #{namespaces}
 SELECT ?s ?label ?description
-FROM <http://IulaClarinMetadata.edu>
+    #{from}
 WHERE {?s dc:description ?description ; rdfs:label ?label .
 }
 EOF
@@ -154,13 +151,9 @@ EOF
 
   def other_using_this_resource
     query = <<EOF
-prefix ms: <http://gilmere.upf.edu/ms.ttl#>
-prefix bio: <http://gilmere.upf.edu/bio.ttl#>
-prefix dc:  <http://purl.org/dc/elements/1.1/#>
-prefix test: <http://gilmere.upf.edu/MetadataRecords.ttl#>
-
+    #{Resource::Base.namespaces}
  SELECT *
-     FROM <http://IulaClarinMetadata.edu>
+    #{Resource::Base.from}
  {
   {
   SELECT ?mss as ?s_id ?msslabel as ?s ?mstype AS ?type_id ?mstypelabel AS ?type
@@ -190,7 +183,7 @@ EOF
   def self.query_find_by_id id
     select = "*"
     where = []
-    where << "{ record:#{id} ?p ?o ."
+    where << "{ test:#{id} ?p ?o ."
     where << "optional { ?p rdfs:label ?plabel . }"
     where << "optional { ?o rdfs:label ?olabel . } "
     where << "} UNION "
@@ -233,22 +226,34 @@ EOF
 
 
   def self.construct_query select, where, group_by
-
-    prefix = ["prefix ms: <http://gilmere.upf.edu/ms.ttl#>"]
-    prefix << "prefix bio: <http://gilmere.upf.edu/bio.ttl#>"
-    prefix << "prefix record: <http://gilmere.upf.edu/MetadataRecords.ttl#>"
-    prefix << "prefix dc: <http://purl.org/dc/elements/1.1/>"
-    prefix << "prefix foaf:    <http://xmlns.com/foaf/0.1/#>"
-
+    prefix = namespaces
     select =  "SELECT #{select}"
-    from =    "FROM <http://IulaClarinMetadata.edu>"
     where =   "WHERE {\n #{where} \n}"
     group_by = "GROUP BY #{group_by}" if group_by
 
-    [prefix, select, from, where, group_by].join("\n")
+    [prefix, select, self.from, where, group_by].join("\n")
+  end
+
+
+  def self.from
+   "
+      FROM <http://IulaClarinMetadata.edu>
+   "
+  end
+
+  def self.namespaces
+   "
+    prefix ms: <http://gilmere.upf.edu/ms.ttl#>
+    prefix bio: <http://gilmere.upf.edu/bio.ttl#>
+    prefix dc:  <http://purl.org/dc/elements/1.1/>
+    prefix test: <http://gilmere.upf.edu/MetadataRecords.ttl#>
+    prefix foaf:    <http://xmlns.com/foaf/0.1/#>
+    prefix browser: <http://browser.upf/browser#>
+   "
   end
 
   protected
+
 
   def self.solution_is_resource?(solution)
     !solution[:olabel].to_s.empty?

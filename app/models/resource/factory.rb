@@ -13,8 +13,10 @@ class Resource::Factory
 
   def self.find_translations
     query = <<EOF
-prefix browser: <http://browser.upf/browser#>
-select * where { ?a browser:topNode ?b .}
+    #{Resource::Base.namespaces}
+select *
+    #{Resource::Base.from}
+ where { ?a browser:topNode ?b .}
 EOF
 
     Resource::Base.query(query)

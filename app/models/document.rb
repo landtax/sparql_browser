@@ -14,12 +14,9 @@ class Document < Resource::Base
 
   def self.find_all_query
     query = <<EOF
-prefix ms: <http://gilmere.upf.edu/ms.ttl#>
-prefix bio: <http://gilmere.upf.edu/bio.ttl#>
-prefix dc:  <http://purl.org/dc/elements/1.1/>
-prefix test: <http://gilmere.upf.edu/MetadataRecords.ttl#>
+    #{namespaces}
 SELECT ?s_id ?s ?dlabel
-FROM <http://IulaClarinMetadata.edu>
+    #{from}
 WHERE
 {
  ?s_id a ?document ; rdfs:label ?s .
@@ -34,10 +31,9 @@ EOF
 
   def self.find_all_faceted_by_subject
     query = <<EOF
-prefix dc:  <http://purl.org/dc/elements/1.1/>
-prefix dcterms:  <http://purl.org/dc/terms/>
+    #{namespaces}
 SELECT *
-FROM <http://IulaClarinMetadata.edu>
+    #{from}
 {
     {
         SELECT ?subject_id ?subject ?doc_id ?doc ?citation {
@@ -53,12 +49,9 @@ EOF
 
   def self.find_all_faceted_by_related_services
     query = <<EOF
-prefix dc:  <http://purl.org/dc/elements/1.1/>
-prefix dcterms:  <http://purl.org/dc/terms/>
-prefix ms: <http://gilmere.upf.edu/ms.ttl#>
-prefix bio: <http://gilmere.upf.edu/bio.ttl#>
+    #{namespaces}
 SELECT *
-FROM <http://IulaClarinMetadata.edu>
+    #{from}
  {
     {
         SELECT ?resource AS ?page_id ?resourceLabel AS ?page ?doc AS ?document_id ?docLabel AS ?document ?docCitation AS ?citation {
@@ -79,12 +72,9 @@ EOF
 
   def self.find_all_faceted_by_related_resources
     query = <<EOF
-prefix dc:  <http://purl.org/dc/elements/1.1/>
-prefix dcterms:  <http://purl.org/dc/terms/>
-prefix ms: <http://gilmere.upf.edu/ms.ttl#>
-prefix bio: <http://gilmere.upf.edu/bio.ttl#>
+    #{namespaces}
 SELECT * 
-FROM <http://IulaClarinMetadata.edu>
+    #{from}
 {  ?page_id a owl:NamedIndividual
     {
         SELECT ?resource AS ?page_id ?resourceLabel AS ?page ?doc AS ?document_id ?docLabel AS ?document  ?docCitation AS ?citation {
@@ -117,12 +107,9 @@ EOF
 
   def self.find_all_faceted_by_topic
     query = <<EOF
-prefix dc:  <http://purl.org/dc/elements/1.1/>
-prefix dcterms:  <http://purl.org/dc/terms/>
-prefix ms: <http://gilmere.upf.edu/ms.ttl#>
-prefix bio: <http://gilmere.upf.edu/bio.ttl#>
+    #{namespaces}
 SELECT ?topic_id ?topic ?doc_id ?doc ?citation
-FROM <http://IulaClarinMetadata.edu>
+    #{from}
 WHERE {  ?doc_id rdfs:label ?doc ; dc:subject ?topic_id ; dcterms:bibliographicCitation ?citation.  ?topic_id rdfs:label  ?topic .}
 GROUP BY ?topic_id ORDER BY ?topic
 EOF
@@ -132,10 +119,9 @@ EOF
 
   def find_all_documented_resources
     query = <<EOF
-prefix test: <http://gilmere.upf.edu/MetadataRecords.ttl#>
-prefix ms: <http://gilmere.upf.edu/ms.ttl#>
+    #{Resource::Base.namespaces}
 SELECT ?resource_id ?resource
-FROM <http://IulaClarinMetadata.edu>
+    #{Resource::Base.from}
 WHERE {
 ?resource_id ms:documentation test:#{id} ; rdfs:label ?resource.
 }

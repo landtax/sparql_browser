@@ -18,11 +18,9 @@ class Service < Resource::Base
 
   def self.find_all_query
     query = <<EOF
-prefix ms: <http://gilmere.upf.edu/ms.ttl#>
-prefix bio: <http://gilmere.upf.edu/bio.ttl#>
-prefix dc:  <http://purl.org/dc/elements/1.1/>
+    #{namespaces}
 SELECT distinct ?service_id ?service ?description
-FROM <http://IulaClarinMetadata.edu>
+    #{from}
 WHERE
 {
  ?service_id rdf:type bio:Service ;
@@ -57,10 +55,9 @@ EOF
 
   def find_all_similar_services
     query = <<EOF
-prefix test: <http://gilmere.upf.edu/MetadataRecords.ttl#>
-prefix bio: <http://gilmere.upf.edu/bio.ttl#>
-SELECT DISTINCT ?s_id ?s
-FROM <http://IulaClarinMetadata.edu>
+    #{Resource::Base.namespaces}
+SELECT ?s_id ?s
+    #{Resource::Base.from}
 WHERE
 {
  test:#{id} bio:task ?task .
