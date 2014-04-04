@@ -243,8 +243,8 @@ EOF
 
   def self.namespaces
    "
-    prefix ms: <http://gilmere.upf.edu/ms.ttl#>
-    prefix bio: <http://gilmere.upf.edu/bio.ttl#>
+    prefix ms: <http://purl.org/ms-lod/MetaShare.ttl#>
+    prefix bio: <http://purl.org/ms-lod/BioServices.ttl#>
     prefix dc:  <http://purl.org/dc/elements/1.1/>
     prefix test: <http://gilmere.upf.edu/MetadataRecords.ttl#>
     prefix foaf:    <http://xmlns.com/foaf/0.1/#>
