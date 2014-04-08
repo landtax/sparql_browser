@@ -5,7 +5,7 @@ class Resource::Factory
   def self.super_class_of subclass
     superclasses = $sparql_cache.fetch('superclass') do
       sparql_super_classes= find_translations.inject({}) { |ret, s| ret[s[:a].to_s.split("#")[1]] = s[:b].to_s.split("#")[1]; ret }
-      ["Service", "Task", "Corpus", "Document", "LexicalConceptualResource"].each { |t| sparql_super_classes[t] = t }
+      ["Service", "Task", "Corpus", "Document", "LexicalConceptualResource", "Project"].each { |t| sparql_super_classes[t] = t }
       sparql_super_classes
     end
     superclasses[subclass]
@@ -36,6 +36,8 @@ EOF
        Corpus.new(id, label, type, type_id, atts)
      when 'document'
        Document.new(id, label, type, type_id, atts)
+     when 'project'
+       Project.new(id, label, type, type_id, atts)
      else
        Resource::Base.new(id, label, type, type_id, atts)
      end

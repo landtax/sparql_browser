@@ -37,6 +37,8 @@ class TypesController < ApplicationController
       Corpus
     when 'lexica'
       Lexica
+    when 'project'
+      Project
     end
   end
 end

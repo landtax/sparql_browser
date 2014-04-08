@@ -247,7 +247,7 @@ EOF
     prefix bio: <http://purl.org/ms-lod/BioServices.ttl#>
     prefix dc:  <http://purl.org/dc/elements/1.1/>
     prefix test: <http://purl.org/ms-lod/UPF-MetadataRecords.ttl#>
-    prefix foaf:    <http://xmlns.com/foaf/0.1/#>
+    prefix foaf:    <http://xmlns.com/foaf/0.1/>
     prefix browser: <http://browser.upf/browser#>
    "
   end
