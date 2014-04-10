@@ -19,7 +19,7 @@ SELECT ?lex_id ?lex ?description
     #{from}
 WHERE{
  ?lex_id a ?class ; rdfs:label ?lex ; dc:description ?description .
-?class browser:topNode ms:LexicalConceptualResource . 
+?class browser:topNode ms:LexicalConceptualResource .
  }
 GROUP BY ?lex_id ?lex ?description
 EOF
@@ -34,8 +34,8 @@ SELECT ?enc_id ?enc ?lex_id ?lex ?description
     #{from}
 WHERE{
  ?lex_id a ?class ; rdfs:label ?lex ; ms:encodingLevel ?enc_id ; dc:description ?description .
-?class browser:topNode ms:LexicalConceptualResource . 
-?enc_id rdfs:label ?enc 
+?class browser:topNode ms:LexicalConceptualResource .
+?enc_id rdfs:label ?enc
  }
 GROUP BY ?enc_id ORDER BY ?enc
 EOF
@@ -70,7 +70,7 @@ WHERE{
 ?linguality_id rdfs:label ?linguality .
 ?class browser:topNode ms:LexicalConceptualResource .
 }
-GROUP BY ?linguality_id ORDER BY ?linguality 
+GROUP BY ?linguality_id ORDER BY ?linguality
 EOF
 
     self.query(query)
