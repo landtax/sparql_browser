@@ -9,7 +9,7 @@ class Lexica < Resource::Base
   end
 
   def self.facets_available
-    ['encoding_level', 'linguistic_information', 'linguality', 'language', 'standards', 'funding_project']
+    ['encoding_level', 'linguistic_information', 'linguality', 'language', 'standards', 'funding_project', 'type']
   end
 
   def self.find_all_query
@@ -117,6 +117,20 @@ WHERE{
 ?project_id rdfs:label ?project.
 ?class browser:topNode ms:LexicalConceptualResource . 
  }
+EOF
+
+    self.query(query)
+  end
+
+  def self.find_all_faceted_by_type
+    query = <<EOF
+    #{namespaces}
+    SELECT ?type_id ?type ?lex_id ?lex
+    #{from}
+WHERE { ?lex_id a ?type_id ; rdfs:label ?lex .
+?type_id rdfs:subClassOf ms:LexicalConceptualResource ;
+rdfs:label ?type . }
+GROUP BY ?type_id ORDER BY ?type_id
 EOF
 
     self.query(query)
