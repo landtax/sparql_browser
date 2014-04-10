@@ -249,6 +249,7 @@ EOF
     prefix test: <http://purl.org/ms-lod/UPF-MetadataRecords.ttl#>
     prefix foaf:    <http://xmlns.com/foaf/0.1/>
     prefix browser: <http://browser.upf/browser#>
+    prefix dcterms:  <http://purl.org/dc/terms/>
    "
   end
 
