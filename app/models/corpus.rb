@@ -34,7 +34,7 @@ SELECT ?annotation_id ?annotation ?corpus_id ?corpus  ?description
 WHERE{
  ?corpus_id a ?class ; rdfs:label ?corpus ; ms:annotationType ?annotation_id  ; dc:description ?description .
  ?class rdfs:subClassOf ms:Corpus .
-?annotation_id rdfs:label ?annotation 
+?annotation_id rdfs:label ?annotation
  }
 GROUP BY ?annotation_id ORDER BY ?annotation
 EOF

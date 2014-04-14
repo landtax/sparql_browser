@@ -1,4 +1,6 @@
 class ResourcesController < ApplicationController
+  layout 'resource'
+
   def index
     @resources = Resource::Base.find_all
   end
