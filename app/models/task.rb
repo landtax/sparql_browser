@@ -31,22 +31,23 @@ EOF
   def self.find_all_faceted_by_project
     query = <<EOF
     #{namespaces}
-SELECT ?task_id ?task ?description
+SELECT ?task_id ?task ?project_id ?project  ?description
     #{from}
-WHERE { ?project dc:subject ?task_id ; rdf:type foaf:Project ; dc:description ?description .
+WHERE { ?project_id dc:subject ?task_id ; rdf:type foaf:Project ; dc:description ?description ; rdfs:label ?project .
 ?task_id rdf:type bio:Task ; rdfs:label ?task .}
 GROUP BY ?task_id
 EOF
+
   self.query(query)
   end
 
   def self.find_all_faceted_by_service
     query = <<EOF
     #{namespaces}
-SELECT ?service_id ?service
+SELECT ?p_id ?p ?service_id ?service 
     #{from}
-WHERE { ?s bio:task ?service_id ; rdf:type bio:Service. ?service_id rdfs:label ?service .}
-GROUP BY ?service_id ?service
+WHERE { ?service_id bio:task ?p_id ; rdf:type bio:Service ; rdfs:label ?service . ?p_id rdfs:label ?p .}
+GROUP BY ?p_id order by ?p_id
 EOF
   self.query(query)
   end
