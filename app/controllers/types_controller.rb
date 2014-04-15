@@ -14,6 +14,7 @@ class TypesController < ApplicationController
     @facet = params[:facet_id]
     @type = target(@type_name)
     @type_name = params[:id]
+    @type_description = @type.description_of @type_name
 
     @browser = @type.send(:find_all_by_facet, @facet)
     render :show_faceted
