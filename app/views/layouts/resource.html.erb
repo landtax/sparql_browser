@@ -52,16 +52,7 @@
     <%= link_to "SPARQL Browser", root_path, :class => "navbar-brand" %>
   </div>
 
-  <!-- Collect the nav links, forms, and other content for toggling -->
-  <div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
-  <%= menu_group do %>
-      <%= menu_item "Services", type_path("Service") %>
-      <%= menu_item "Tasks", type_path("Task") %>
-      <%= menu_item "Documents", type_path("Document") %>
-      <%= menu_item "Corpus", type_path("Corpus") %>
-      <%= menu_item "Lexica", type_path("Lexica") %>
-  <% end %>
-  </div><!-- /.navbar-collapse -->
+  <%= render :partial => 'layouts/navigation' %>
   
   </div>
 </header>
