@@ -11,10 +11,13 @@ module TypesHelper
   end
 
   def link_or_value(label, id=nil)
-    if id.blank?
+    if label.match("^http://")
+      link_to "#{label} <small><i class='icon-share'> </i></small>".html_safe, label, :target => "_blank", :title => "External link"
+    elsif id.blank?
       label
     else
       link_to labelize(label), resource_path(id)
     end
   end
+
 end

@@ -7,13 +7,12 @@
     <%  if value.kind_of?(Array) %>
       <ul>
         <% value.each do |v| %>
-          <li><%= resource_value(v) %></li>
+          <li><%= link_or_value v.label %></li>
         <% end %>
       </ul>
     <% else %>
-      <%= auto_link resource_value(value) %>
+      <%= link_or_value value.label.to_s %>
     <% end %>
   </td>
 </tr>
-  
 
