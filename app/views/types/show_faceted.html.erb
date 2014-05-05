@@ -25,5 +25,9 @@
 <% content_for :header do %>
     <h1><%= @type_name.humanize.pluralize %></h1>
     <p> <%= @type_description %></p>
+<% end %>
 
+
+<% content_for :title do %>
+    <%= @type_name.humanize.pluralize %> <%= optionize(@facet) %>
 <% end %>

@@ -33,3 +33,7 @@
     <p> <%= @type_description %></p>
 
 <% end %>
+
+<% content_for :title do %>
+    <%= @type_name.humanize.pluralize %> list 
+<% end %>

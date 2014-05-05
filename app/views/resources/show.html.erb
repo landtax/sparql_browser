@@ -24,4 +24,7 @@
   <% end %>
 <% end %>
 
+<% content_for :title do %>
+  <%= @resource.label %> - <%= @resource.type.humanize %>
+<% end %>
 
