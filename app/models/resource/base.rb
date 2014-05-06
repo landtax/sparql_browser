@@ -277,12 +277,7 @@ EOF
   end
 
   def keyize_attribute_type_id type_id
-    return type_id.scan(/(\w*)$/).flatten.first
-    if type_id.match("#")
-      type_id.split("#")[1]
-    else
-      type_id.scan(/(w*)$/).flatten.first
-    end
+    type_id.scan(/(\w*)$/).flatten.first
   end
 
 
