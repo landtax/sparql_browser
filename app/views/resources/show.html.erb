@@ -5,7 +5,6 @@
   <% @priority_attributes.each do |att| %>
     <%= render :partial => 'resource', :locals => {:att => att} if @resource.attr_list.include? att%>
   <% end %>
-
   <% @non_priority_attributes.each do |att| %>
     <%= render :partial => 'resource', :locals => {:att => att} %>
   <% end %>

@@ -1,7 +1,7 @@
 class Corpus < Resource::Base
 
   def priority_attr
-    %w{ resourceName Description type languageName documentation resourceCreator fundingProject contactPerson  identfier url linguality annotationType segmentationLevel }
+    %w{ resourceName description type languageName documentation resourceCreator fundingProject contactPerson  identfier url linguality annotationType segmentationLevel }
   end
 
   def banned_attr

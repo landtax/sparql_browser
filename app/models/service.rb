@@ -1,7 +1,7 @@
 class Service < Resource::Base
 
   def priority_attr
-    %w{resourceName Description task documentation languageName serviceProvider serviceTechnology fundingProject input output demoInvocation endpoint WSDL}
+    %w{resourceName description task documentation languageName serviceProvider serviceTechnology fundingProject input output demoInvocation endpoint WSDL}
   end
 
   def banned_attr

@@ -7,7 +7,7 @@
     <%  if value.kind_of?(Array) %>
       <ul>
         <% value.each do |v| %>
-          <li><%= link_or_value v.label %></li>
+          <li><%= link_or_value v.label, v.id %></li>
         <% end %>
       </ul>
     <% else %>

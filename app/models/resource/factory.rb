@@ -30,7 +30,7 @@ EOF
        Service.new(id, label, type, type_id, atts)
      when 'task'
        Task.new(id, label, type, type_id, atts)
-     when 'lexical_conceptual_resource'
+     when 'lexicalconceptualresource'
        Lexica.new(id, label, type, type_id, atts)
      when 'corpus'
        Corpus.new(id, label, type, type_id, atts)

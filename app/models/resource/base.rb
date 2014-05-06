@@ -15,7 +15,7 @@ class Resource::Base
   end
 
   def priority_attr
-    ["Title", "resourceName", "Description", "languageName", "documentation"]
+    ["title", "resourceName", "description", "languageName", "documentation"]
   end
 
   def banned_attr
@@ -61,10 +61,11 @@ EOF
     all_descriptions[id.to_s]
   end
 
+
   def initialize_attributes(atts)
     hash = {}
     atts.each do |att|
-      key = att.type
+      key = keyize_attribute_type_id(att.type_id || att.type)
 
       if hash.keys.include?(key)
         unless hash[key].kind_of?(Array)
@@ -273,6 +274,15 @@ EOF
 
   def self.solution_is_owl?(solution)
     solution[:p].to_s.match(/www.w3.org\/2002\/07\/owl/)
+  end
+
+  def keyize_attribute_type_id type_id
+    return type_id.scan(/(\w*)$/).flatten.first
+    if type_id.match("#")
+      type_id.split("#")[1]
+    else
+      type_id.scan(/(w*)$/).flatten.first
+    end
   end
 
 

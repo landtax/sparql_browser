@@ -1,7 +1,7 @@
 class Task < Resource::Base
 
   def priority_attr
-    %w{Description}
+    %w{description}
   end
 
   def banned_attr
