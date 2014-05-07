@@ -269,7 +269,7 @@ EOF
   def self.solution_is_type?(solution)
     solution[:p].to_s.match(/22-rdf-syntax-ns#type/) &&
       !solution[:olabel].to_s.empty? &&
-      ( solution[:o].to_s.match(/BioServices/) || solution[:o].to_s.match(/bibo\/#/) || solution[:o].to_s.match(/MetaShare/))
+      ( solution[:o].to_s.match(/BioServices/) || solution[:o].to_s.match(/bibo\/#/) || solution[:o].to_s.match(/MetaShare/) || solution[:o].to_s.match(/xmlns\.com/))
   end
 
   def self.solution_is_owl?(solution)
