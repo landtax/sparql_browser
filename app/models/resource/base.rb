@@ -19,7 +19,7 @@ class Resource::Base
   end
 
   def banned_attr
-    []
+    ["type"]
   end
 
   def non_priority_attr
