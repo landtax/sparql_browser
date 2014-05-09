@@ -40,6 +40,8 @@ class TypesController < ApplicationController
       Lexica
     when 'project'
       Project
+    when 'area'
+      Area
     end
   end
 end
