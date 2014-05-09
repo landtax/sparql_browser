@@ -1,7 +1,11 @@
 module ApplicationHelper
 
   def labelize(string)
-    back_to_case(string.camelize.titleize)
+    if is_dbpedia? string
+      dbpedia_label(string)
+    else
+      back_to_case(string.camelize.titleize)
+    end
   end
 
   def back_to_case(text)

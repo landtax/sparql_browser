@@ -11,13 +11,23 @@ module TypesHelper
   end
 
   def link_or_value(label, id=nil)
-    if label.match("^http://")
+    if is_dbpedia? label
+      link_to "#{dbpedia_label(label)} <small><i class='icon-share'> </i></small>".html_safe, label, :target => "_blank", :title => "External link"
+    elsif label.match("^http://")
       link_to "#{label} <small><i class='icon-share'> </i></small>".html_safe, label, :target => "_blank", :title => "External link"
     elsif id.blank?
       label
     else
       link_to labelize(label), resource_path(id)
     end
+  end
+
+  def dbpedia_label label
+    label.scan(/(\w+)$/)[0].first.humanize
+  end
+
+  def is_dbpedia? label
+    label.match("^http://dbpedia.org")
   end
 
 end
