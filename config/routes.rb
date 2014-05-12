@@ -2,7 +2,7 @@ SparqlBrowser::Application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
-  get '/', to: redirect('/types/Service')
+  get '/', to: redirect('/types/Area')
   root 'resources#index'
 
   # Example of regular route:
@@ -15,6 +15,7 @@ SparqlBrowser::Application.routes.draw do
   #   resources :products
   #
   
+  get 'types/Area' => 'areas#show', as: :area
   get 'types/:id/by/:facet_id/' => 'types#show_faceted', as: :facet
   resources :resources
   resources :types

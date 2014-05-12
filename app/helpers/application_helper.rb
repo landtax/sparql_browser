@@ -8,6 +8,17 @@ module ApplicationHelper
     end
   end
 
+  def area_icon type
+    if type.to_s.match(/Project/)
+      klass = "icon-briefcase"
+      title = "Project"
+    else
+      klass = "icon-book"
+      title = "Document"
+    end
+    "<i class='#{klass}' title='#{title}'> #{title} </i>".html_safe
+  end
+
   def back_to_case(text)
 
     result = text
