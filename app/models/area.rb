@@ -22,7 +22,9 @@ class Area < Resource::Base
 SELECT ?area ?s_id ?s ?type
     #{from}
 WHERE {?s_id ms:area ?area ; rdfs:label ?s ; rdf:type ?type .
-FILTER(REGEX(STR(?type), "^http://purl")).}
+FILTER(NOT(REGEX(STR(?type), "^http://www.w3.org/"))) . 
+  }
+GROUP BY ?area ORDER BY ?area
 EOF
 
     self.query(query)
@@ -33,7 +35,7 @@ EOF
     select = "?area ?s_id ?s ?type"
     where = []
     where << "?s_id ms:area ?area ; rdfs:label ?s ; rdf:type ?type .  "
-    where << 'FILTER(REGEX(STR(?type), "^http://purl")) .'
+    where << 'FILTER(NOT(REGEX(STR(?type), "^http://www.w3.org/"))) . '
 
     group_by = "?area ORDER BY ?area"
 
