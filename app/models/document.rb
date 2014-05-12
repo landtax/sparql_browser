@@ -9,7 +9,7 @@ class Document < Resource::Base
   end
 
   def self.facets_available
-    ['subject', 'related_services', 'related_resources', 'topic']
+    ['subject', 'related_services', 'related_resources', 'area']
   end
 
   def self.find_all_query
@@ -105,13 +105,14 @@ EOF
     self.query(query)
   end
 
-  def self.find_all_faceted_by_topic
+  def self.find_all_faceted_by_area
     query = <<EOF
     #{namespaces}
-SELECT ?topic_id ?topic ?doc_id ?doc ?citation
+SELECT DISTINCT ?area ?doc_id ?doc ?citation 
     #{from}
-WHERE {  ?doc_id rdfs:label ?doc ; dc:subject ?topic_id ; dcterms:bibliographicCitation ?citation.  ?topic_id rdfs:label  ?topic .}
-GROUP BY ?topic_id ORDER BY ?topic
+WHERE { ?doc_id ms:area ?area ;
+ dc:subject ?subject ; rdfs:label ?doc  ; dcterms:bibliographicCitation ?citation.} 
+GROUP BY ?area ORDER BY ?area
 EOF
 
     self.query(query)

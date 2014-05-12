@@ -23,7 +23,8 @@ module TypesHelper
   end
 
   def dbpedia_label label
-    label.scan(/(\w+)$/)[0].first.humanize
+    extracted_label = (label.scan(/([\w\(\)]+)$/)[0] || [""]).first
+    extracted_label.humanize
   end
 
   def is_dbpedia? label

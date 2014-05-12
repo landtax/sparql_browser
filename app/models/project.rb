@@ -1,7 +1,7 @@
 class Project < Resource::Base
 
   def self.facets_available
-    ['task', 'topic']
+    ['task', 'area']
   end
 
   def self.find_all_query
@@ -30,17 +30,17 @@ EOF
     self.query(query)
   end
 
-  def self.find_all_faceted_by_topic
+  def self.find_all_faceted_by_area
     query = <<EOF
     #{namespaces}
-SELECT ?subject ?project_id ?project ?desc
+SELECT ?area ?project_id ?project ?desc
     #{from}
-WHERE { ?project_id rdf:type foaf:Project ; dc:subject ?subject ; rdfs:label ?project; dc:description ?desc .
+WHERE { ?project_id rdf:type foaf:Project ; ms:area ?area ; rdfs:label ?project; dc:description ?desc .
 
-FILTER (regex(str(?subject),"http://dbpedia"))
+FILTER (regex(str(?area),"http://dbpedia"))
 }
 
-ORDER BY ?subject 
+ORDER BY ?area 
 EOF
 
     self.query(query)

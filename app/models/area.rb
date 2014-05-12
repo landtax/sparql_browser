@@ -33,7 +33,7 @@ EOF
     select = "?area ?s_id ?s ?type"
     where = []
     where << "?s_id ms:area ?area ; rdfs:label ?s ; rdf:type ?type .  "
-    where << 'FILTER(REGEX(STR(?type), "^http://purl")).'
+    where << 'FILTER(REGEX(STR(?type), "^http://purl")) .'
 
     group_by = "?area ORDER BY ?area"
 
