@@ -1,6 +1,6 @@
 
 <% @browser.facets.each do |key, facet| %>
-  <h3 id="<%= facet[:id] %>"> <%= link_or_value facet[:label], facet[:id] %> </h3>
+  <h3 id="<%= labelize(facet[:label]).parameterize %>"> <%= link_or_value facet[:label], facet[:id] %> </h3>
       <ul class="list-group" >
       <% facet[:solutions].each do |solution| %>
           <li class="list-group-item">
@@ -15,6 +15,7 @@
       <% end %>
       </ul>
 
-  <hr />
+  <a href="#top" class="pull-right"><small> Back to top</small></a>
+  <hr class="facet_separator" />
 <% end %>
 

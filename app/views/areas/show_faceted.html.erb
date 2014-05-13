@@ -1,4 +1,5 @@
 <div class="row">
+<a name="top"> </a>
   <div class="col-lg-8">
     <h1> Areas </h1>
   </div>
@@ -14,7 +15,7 @@
 
       <div class="list-group">
         <% @browser.facets.each do |key, facet| %>
-          <%= link_to(truncate(labelize(facet[:label] ), length: 90), "##{facet[:id]}", :class => "list-group-item") %>
+          <%= link_to(truncate(labelize(facet[:label] ), length: 90), "##{labelize(facet[:label]).parameterize}", :class => "list-group-item") %>
       <% end %>
       </div>
     </div>
