@@ -1,13 +1,25 @@
 <table class="table table-hover table-condensed table-bordered">
   <thead>
   <tr>
-    <th> <%= title %> </th>
+    <th> <span class="related-title"> <%= title %> </span>
+      <% types = resources.solutions.group_by { |s| s[:type].to_s }%>
+      <% if types.size > 1 %>
+        <% first = true %>
+        <% types.each do |k, solutions| %>
+        <span><small>
+            <% unless first %> | <% end %>
+            <%= link_to k.pluralize, "#related-#{k}" %>
+        </small></span>
+        <% first = false %>
+        <% end %>
+      <% end %>
+    </th>
   </tr>
   </thead>
   <tbody>
-    <% resources.solutions.group_by {|s| s[:type].to_s }.each do |k, solutions| %>
+    <% types.each do |k, solutions| %>
       <tr>
-        <td colspan="4"> <strong><%= k.pluralize %></strong> </td>
+        <td colspan="4"> <a name="related-<%= k %>" ></a> <strong><%= k.pluralize %></strong> </td>
       </tr>
       <% solutions.each do |solution| %>
       <tr>
