@@ -12,7 +12,14 @@ module TypesHelper
 
   def link_or_value(label, id=nil)
     if is_dbpedia? label
-      link_to "#{dbpedia_label(label)} <small><i class='icon-share'> </i></small>".html_safe, label, :target => "_blank", :title => "External link"
+      html = ""
+      html << dbpedia_label(label)
+      html << '&nbsp;&nbsp;&nbsp;<font size="-1">'
+      html << link_to("[ DBpedia <small><i class='icon-share'> </i></small>".html_safe, label, :target => "_blank", :title => "External link")
+      html << "&nbsp;&nbsp;"
+      html << link_to("Wikipedia <small><i class='icon-share'> </i></small> ]".html_safe, dbpedia_link_to_wiki_link(label), :target => "_blank", :title => "External link")
+      html << "</font>"
+      html.html_safe
     elsif label.match("^http://")
       link_to "#{label} <small><i class='icon-share'> </i></small>".html_safe, label, :target => "_blank", :title => "External link"
     elsif id.blank?
@@ -31,4 +38,7 @@ module TypesHelper
     label.match("^http://dbpedia.org")
   end
 
+  def dbpedia_link_to_wiki_link label
+    "http://en.wikipedia.org/wiki/" + (label.scan(/([-\w\(\)]+)$/)[0] || [""]).first
+  end
 end
