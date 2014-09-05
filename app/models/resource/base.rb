@@ -19,7 +19,7 @@ class Resource::Base
   end
 
   def banned_attr
-    ["type"]
+    ["type", "topNode"]
   end
 
   def non_priority_attr
@@ -112,6 +112,24 @@ EOF
     Resource::Base.new(id, label, type, type_id, [])
   end
 
+  def self.build_rdfs_attribute(solution)
+    type = solution[:p].to_s.scan(/rdf-schema#(.*$)/).flatten[0]
+    label = solution[:o].to_s
+    id = nil
+    type_id = nil
+
+    Resource::Base.new(id, label, type, type_id, [])
+  end
+
+  def self.build_browser_attribute(solution)
+    type = solution[:p].to_s.scan(/browser#(.*$)/).flatten[0]
+    label = solution[:o].to_s
+    id = nil
+    type_id = nil
+
+    Resource::Base.new(id, label, type, type_id, [])
+  end
+
   def self.build_attribute(solution)
     label = ""
 
@@ -142,6 +160,10 @@ EOF
         type_id = solution[:o].to_s
       elsif solution_is_owl?(solution)
         attributes << build_owl_attribute(solution)
+      elsif solution_is_rdfs?(solution)
+        attributes << build_rdfs_attribute(solution)
+      elsif solution_is_browser?(solution)
+        attributes << build_browser_attribute(solution)    
       else
         attributes << build_attribute(solution)
       end
@@ -274,6 +296,14 @@ EOF
 
   def self.solution_is_owl?(solution)
     solution[:p].to_s.match(/www.w3.org\/2002\/07\/owl/)
+  end
+ 
+  def self.solution_is_rdfs?(solution)
+    solution[:p].to_s.match(/www.w3.org\/2000\/01\/rdf-schema/)
+  end
+
+  def self.solution_is_browser?(solution)
+    solution[:p].to_s.match(/browser.upf\/browser/)
   end
 
   def keyize_attribute_type_id type_id

@@ -1,11 +1,11 @@
 class Lexica < Resource::Base
 
   def priority_attr
-    %w{ resourceName description type languageName documentation resourceCreator fundingProject contactPerson  identfier url linguality annotationType segmentationLevel }
+    %w{ resourceName description url type languageName documentation resourceCreator contactPerson fundingProject identfier linguality annotationType segmentationLevel }
   end
 
   def banned_attr
-    %w{ name languageCode resourceShortName language metashareId }
+    %w{ name languageId resourceShortName language metaShareId }
   end
 
   def self.facets_available
