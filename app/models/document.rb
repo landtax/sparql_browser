@@ -22,7 +22,7 @@ WHERE
  ?s_id a ?document ; rdfs:label ?s .
  ?document rdfs:subClassOf ms:Document ; rdfs:label ?dlabel.
 }
-GROUP BY ?document ORDER BY ?dlabel
+ORDER BY ?s
 
 EOF
 

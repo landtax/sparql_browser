@@ -11,7 +11,7 @@ class Project < Resource::Base
     #{from}
     WHERE {
         ?project_id a foaf:Project ; dc:description ?desc ; rdfs:label ?project
-    }
+    } ORDER BY ?project
 EOF
 
     self.query(query)

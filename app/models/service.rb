@@ -26,7 +26,7 @@ WHERE
  ?service_id rdf:type bio:Service ;
 rdfs:label ?service .
 OPTIONAL { ?service_id dc:description ?description .}
-}
+} ORDER BY ?service
 EOF
 
     self.query(query)

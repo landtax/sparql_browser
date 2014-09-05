@@ -20,7 +20,7 @@ SELECT ?corpus_id ?corpus
 WHERE
 {?corpus_id a ?class ; rdfs:label ?corpus .
  ?class rdfs:subClassOf ms:Corpus
- } GROUP BY ?corpus_id ORDER BY ?corpus
+ } ORDER BY ?corpus
 EOF
 
     self.query(query)

@@ -21,7 +21,7 @@ WHERE{
  ?lex_id a ?class ; rdfs:label ?lex ; dc:description ?description .
 ?class browser:topNode ms:LexicalConceptualResource .
  }
-GROUP BY ?lex_id ?lex ?description
+ORDER BY ?lex
 EOF
 
     self.query(query)
