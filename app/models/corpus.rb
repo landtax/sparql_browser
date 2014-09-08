@@ -1,5 +1,8 @@
 class Corpus < Resource::Base
 
+  ## Corpus resources priority_attr and banned_attr are ignored! BUG!
+  ## We use app/models/resource/base.rb to edit order. 
+  ## WARN! that could affect orther resources as well.
   def priority_attr
     %w{ resourceName description type languageName documentation resourceCreator fundingProject contactPerson  identfier url linguality annotationType segmentationLevel }
   end

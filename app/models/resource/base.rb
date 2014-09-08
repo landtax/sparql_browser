@@ -15,7 +15,7 @@ class Resource::Base
   end
 
   def priority_attr
-    ["title", "resourceName", "description", "languageName", "documentation"]
+    ["title", "resourceName", "description", "languageName", "url", "documentation"]
   end
 
   def banned_attr
