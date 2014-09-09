@@ -110,16 +110,16 @@ h3,.h3{font-size:24px}
 h4,.h4{font-size:18px}
 h5,.h5{font-size:14px}
 h6,.h6{font-size:12px}
-#button1{background: url('../img/marta/button1-1.png') top left no-repeat;
+#button1{background: url('../img/button1-1.png') top left no-repeat;
 height: 25px;
 padding-left: 30px;}
-#button2{background: url('../img/marta/button2-2.png') top left no-repeat;
+#button2{background: url('../img/button2-2.png') top left no-repeat;
 height: 25px;
 padding-left: 30px;}
-#button6{background: url('../img/marta/button6-2.png') top left no-repeat;
+#button6{background: url('../img/button6-2.png') top left no-repeat;
 height: 25px;
 padding-left: 30px;}
-#clarin{background: url('../img/marta/clarinLogo.png') top left no-repeat;
+#clarin{background: url('../img/clarinLogo.png') top left no-repeat;
 
 padding-left: 30px;}
 .page-header{padding-bottom:9px;margin:40px 0 20px;border-bottom:1px solid #eee}
