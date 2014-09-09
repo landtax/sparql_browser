@@ -1,7 +1,7 @@
 class Document < Resource::Base
 
   def priority_attr
-    %w{ title creator bibliographicCitation url sameAs subject references identifier }
+    %w{ title url creator bibliographicCitation sameAs area subject references identifier }
   end
 
   def banned_attr

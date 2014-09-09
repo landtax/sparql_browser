@@ -1,5 +1,13 @@
 class Project < Resource::Base
 
+  def priority_attr
+    %w{name homepage description area subject}
+  end
+
+  def banned_attr
+    %w{type}
+  end
+
   def self.facets_available
     ['task', 'area']
   end
