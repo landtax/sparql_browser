@@ -12,9 +12,19 @@
   </tbody>
 </table>
 
+<% sameAsData = @resource.attributes.send(:"sameAs") %>
+<% if sameAsData.kind_of?(Array) %>
+  <% sameAsData.each do |tmp| %>
+      <% if tmp.label.include? "dbpedia" %>
+       <%= render :partial => "dbpedia_subjects", :locals => {:sameAsData => tmp, :title => "Dbpedia relevant information for this #{@resource.type}:"} %> 
+      <% end %>
+  <% end %>
+<%elsif sameAsData.label.include? "dbpedia" %>
+    <%= render :partial => "dbpedia_subjects", :locals => {:sameAsData => sameAsData, :title => "Dbpedia relevant information for this #{@resource.type}:"} %>
+<% end %>
 
 <% unless @browser_other_using.solutions.empty? %>
-  <%= render :partial => "other_using_resource", :locals => {:resources => @browser_other_using, :title => "Related to this #{@resource.type}:"} %>
+  <%= render :partial => "other_using_resource", :locals => {:resources => @browser_other_using, :title => "IULA relevant information for this #{@resource.type}:"} %>
 <% end %>
 
 <% @browser_related.each do |key, browser| %>
@@ -22,7 +32,7 @@
     <%= render :partial => "related_resource", :locals => {:resources => browser, :title => "#{key.humanize}"} %>
   <% end %>
 <% end %>
-
+<%#= debug @resource if Rails.env.development? %>
 <% content_for :title do %>
   <%= @resource.label %> - <%= @resource.type.humanize %>
 <% end %>

@@ -1,0 +1,16 @@
+<table class="table table-hover table-condensed table-bordered">
+  
+  <thead>
+  <tr>
+    <th> <span class="related-title"> <%= image_tag("DBpediaLogo.svg", size: "50") %> &nbsp;&nbsp; <%= title %> </span>
+    </th>
+  </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td> <%= dbpedia_subjects_link sameAsData.label %>
+      </td>
+    </tr>
+  </tbody>
+</table>

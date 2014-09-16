@@ -44,4 +44,12 @@ module TypesHelper
   def dbpedia_link_to_wiki_link label
     "http://en.wikipedia.org/wiki/" + extract_dbpedia_label(label)
   end
+
+  def dbpedia_subjects_link(label)
+    query = ""
+    query << "http://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=select+%3Fo+where+%7B+%3Chttp%3A%2F%2Fdbpedia.org%2Fresource%2F"
+    query << extract_dbpedia_label(label)
+    query << "%3E%09dcterms%3Asubject+%3Fo+.%7D&format=text%2Fhtml&timeout=30000&debug=on"
+    link_to("Dbpedia subjects <small><i class='icon-share'> </i></small>".html_safe, query, :target => "_blank", :title => "External link")
+  end
 end

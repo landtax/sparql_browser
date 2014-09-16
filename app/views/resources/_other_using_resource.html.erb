@@ -1,7 +1,7 @@
 <table class="table table-hover table-condensed table-bordered">
   <thead>
   <tr>
-    <th> <span class="related-title"> <%= title %> </span>
+    <th> <span class="related-title"> <%= image_tag("avatar_iula_twt.jpg", size: "50") %> &nbsp;&nbsp; <%= title %> </span>
       <% types = resources.solutions.group_by { |s| s[:type].to_s }%>
       <% if types.size > 1 %>
         <% first = true %>
