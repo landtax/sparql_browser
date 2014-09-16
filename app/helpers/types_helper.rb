@@ -29,9 +29,12 @@ module TypesHelper
     end
   end
 
+  def extract_dbpedia_label label
+    (label.scan(/([-\w\(\)]+)$/)[0] || [""]).first
+  end
+
   def dbpedia_label label
-    extracted_label = (label.scan(/([-\w\(\)]+)$/)[0] || [""]).first
-    extracted_label.humanize
+    extract_dbpedia_label(label).humanize
   end
 
   def is_dbpedia? label
@@ -39,6 +42,6 @@ module TypesHelper
   end
 
   def dbpedia_link_to_wiki_link label
-    "http://en.wikipedia.org/wiki/" + (label.scan(/([-\w\(\)]+)$/)[0] || [""]).first
+    "http://en.wikipedia.org/wiki/" + extract_dbpedia_label(label)
   end
 end
