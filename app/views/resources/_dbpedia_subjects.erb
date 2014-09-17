@@ -2,7 +2,7 @@
   
   <thead>
   <tr>
-    <th> <span class="related-title"><%= image_tag("rdf_flyer.svg", size: "40") %> &nbsp;&nbsp; <%= title %> </span>
+    <th colspan=2> <span class="related-title"><%= image_tag("rdf_flyer.svg", size: "40") %> &nbsp;&nbsp; <%= title %> </span>
          <span class="pull-right"><%= image_tag("DBpediaLogo.svg", size: "50") %> </span>
     </th>
   </tr>
@@ -12,6 +12,9 @@
     <tr>
       <td> <%= dbpedia_subjects_link sameAsData.label %>
       </td>
+      <td> <%= dbpedia_subjects_insert_table sameAsData.label %>
+      </td>
     </tr>
   </tbody>
 </table>
+

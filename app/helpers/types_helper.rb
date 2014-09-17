@@ -45,11 +45,30 @@ module TypesHelper
     "http://en.wikipedia.org/wiki/" + extract_dbpedia_label(label)
   end
 
-  def dbpedia_subjects_link(label)
+  def make_dbpedia_subjects_query label
     query = ""
     query << "http://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=select+%3Fo+where+%7B+%3Chttp%3A%2F%2Fdbpedia.org%2Fresource%2F"
     query << extract_dbpedia_label(label)
-    query << "%3E%09dcterms%3Asubject+%3Fo+.%7D&format=text%2Fhtml&timeout=30000&debug=on"
-    link_to("Dbpedia subjects <small><i class='icon-share'> </i></small>".html_safe, query, :target => "_blank", :title => "External link")
+    query << "%3E%09dcterms%3Asubject+%3Fo+.%7D&format=text%2Fhtml&timeout=30000&debug=on"    
+    query
   end
+
+  def dbpedia_subjects_link label
+    link_to("Dbpedia subjects <small><i class='icon-share'> </i></small>".html_safe, make_dbpedia_subjects_query(label), :target => "_blank", :title => "External link")
+  end
+
+  def dbpedia_subjects_insert_table label
+    begin
+      response = open( make_dbpedia_subjects_query label ).read
+    rescue
+      ""
+    else
+      response.sub! 'class="sparql"', 'class="table table-hover table-condensed table-bordered"'
+      response.sub!(/<th>.*/, '')
+      response.gsub!(/<\/a>/, ' <small><i class="icon-share"> </i></small></a>')
+      response.html_safe
+    end
+    
+  end
+
 end
