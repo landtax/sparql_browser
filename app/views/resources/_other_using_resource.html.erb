@@ -5,9 +5,12 @@
       <% types = resources.solutions.group_by { |s| s[:type].to_s }%>
       <% if types.size > 1 %>
         <% first = true %>
+        <% i = 0 %>
         <% types.each do |k, solutions| %>
+        <% i += 1 %>
         <span><small>
             <% unless first %> | <% end %>
+            <span class="badge"><%= i %></span>
             <%= link_to k.pluralize, "#related-#{k}" %>
         </small></span>
         <% first = false %>
@@ -18,9 +21,11 @@
   </tr>
   </thead>
   <tbody>
+    <% i = 0 %>
     <% types.each do |k, solutions| %>
+    <% i += 1 %>
       <tr>
-        <td colspan="4"> <a name="related-<%= k %>" ></a> <strong><%= k.pluralize %></strong> </td>
+        <td colspan="4"> <span class="badge"><%= i %></span><a name="related-<%= k %>" ></a> <%= k.pluralize %> </td>
       </tr>
       <% solutions.each do |solution| %>
       <tr>
