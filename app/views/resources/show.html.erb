@@ -13,14 +13,17 @@
 </table>
 
 <% sameAsData = @resource.attributes.send(:"sameAs") %>
-<% if sameAsData.kind_of?(Array) %>
-  <% sameAsData.each do |tmp| %>
-      <% if tmp.label.include? "dbpedia" %>
-       <%= render :partial => "dbpedia_subjects", :locals => {:sameAsData => tmp, :title => "Dbpedia relevant information for this #{@resource.type}:"} %> 
-      <% end %>
+<%# debug sameAsData if Rails.env.development? %>
+<% unless sameAsData.nil? %> 
+  <% if sameAsData.kind_of?(Array) %>
+    <% sameAsData.each do |tmp| %>
+        <% if tmp.label.include? "dbpedia" %>
+         <%= render :partial => "dbpedia_subjects", :locals => {:sameAsData => tmp, :title => "Dbpedia relevant information for this #{@resource.type}:"} %> 
+        <% end %>
+    <% end %>
+  <%elsif sameAsData.label.include? "dbpedia" %>
+      <%= render :partial => "dbpedia_subjects", :locals => {:sameAsData => sameAsData, :title => "Dbpedia relevant information for this #{@resource.type}:"} %>
   <% end %>
-<%elsif sameAsData.label.include? "dbpedia" %>
-    <%= render :partial => "dbpedia_subjects", :locals => {:sameAsData => sameAsData, :title => "Dbpedia relevant information for this #{@resource.type}:"} %>
 <% end %>
 
 <% unless @browser_other_using.solutions.empty? %>
