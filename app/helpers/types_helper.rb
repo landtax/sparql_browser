@@ -13,10 +13,16 @@ module TypesHelper
   def link_or_value(label, id=nil)
     if is_dbpedia? label
       make_dbpedia_wikipedia_html_links label
+
+    elsif is_orcid? label
+      link_to "#{image_tag("orcidiDicon.gif")} #{label} <small><i class='icon-share'> </i></small>".html_safe, label, :target => "_blank", :title => "External link"
+
     elsif label.match("^http://")
       link_to "#{truncate(label, length: 70)} <small><i class='icon-share'> </i></small>".html_safe, label, :target => "_blank", :title => "External link"
+
     elsif id.blank?
       label
+      
     else
       link_to labelize(label), resource_path(id)
     end
@@ -34,6 +40,10 @@ module TypesHelper
 
   def is_dbpedia? label
     label.match("^http://dbpedia.org")
+  end
+
+  def is_orcid? label
+    label.match("^http://orcid.org/")
   end
 
   def dbpedia_link_to_wiki_link label
