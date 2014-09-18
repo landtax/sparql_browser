@@ -12,14 +12,7 @@ module TypesHelper
 
   def link_or_value(label, id=nil)
     if is_dbpedia? label
-      html = ""
-      html << dbpedia_label(label)
-      html << '&nbsp;&nbsp;&nbsp;<font size="-1">'
-      html << link_to("[ DBpedia <small><i class='icon-share'> </i></small>".html_safe, label, :target => "_blank", :title => "External link")
-      html << "&nbsp;&nbsp;"
-      html << link_to("Wikipedia <small><i class='icon-share'> </i></small> ]".html_safe, dbpedia_link_to_wiki_link(label), :target => "_blank", :title => "External link")
-      html << "</font>"
-      html.html_safe
+      make_dbpedia_wikipedia_html_links label
     elsif label.match("^http://")
       link_to "#{label} <small><i class='icon-share'> </i></small>".html_safe, label, :target => "_blank", :title => "External link"
     elsif id.blank?
@@ -30,7 +23,9 @@ module TypesHelper
   end
 
   def extract_dbpedia_label label
-    (label.scan(/([-\w\(\)]+)$/)[0] || [""]).first
+    #label.scan(/([-\w\(\)]+)$/)[0] || [""]).first
+    uri = URI.parse(label)
+    File.basename(uri.path)
   end
 
   def dbpedia_label label
@@ -57,16 +52,40 @@ module TypesHelper
     link_to("Dbpedia subjects <small><i class='icon-share'> </i></small>".html_safe, make_dbpedia_subjects_query(label), :target => "_blank", :title => "External link")
   end
 
+  def make_dbpedia_wikipedia_html_links label
+    html = ""
+    html << dbpedia_label(label)
+    html << '&nbsp;&nbsp;&nbsp;'
+    html << '<font size="-1">'
+    html << link_to("[ DBpedia <small><i class='icon-share'> </i></small>".html_safe, label, :target => "_blank", :title => "External link")
+    html << "&nbsp;&nbsp;"
+    html << link_to("Wikipedia <small><i class='icon-share'> </i></small> ]".html_safe, dbpedia_link_to_wiki_link(label), :target => "_blank", :title => "External link")
+    html << "</font>"
+    html.html_safe
+  end
+
   def dbpedia_subjects_insert_table label
     begin
       response = open( make_dbpedia_subjects_query label ).read
     rescue
       ""
     else
-      response.sub! 'class="sparql"', 'class="table table-hover table-condensed table-bordered"'
-      response.sub!(/<th>.*/, '')
-      response.gsub!(/<\/a>/, ' <small><i class="icon-share"> </i></small></a>')
-      response.html_safe
+      
+      # response.sub! 'class="sparql"', 'class="table table-hover table-condensed table-bordered"'
+      # response.sub!(/<th>.*/, '')
+      # response.gsub!(/<\/a>/, ' <small><i class="icon-share"> </i></small></a>')
+      # response.html_safe
+
+      html = ""
+      links = response.scan(/href=".*?"/)
+      links.each do |link|
+        link.gsub!(/"/,'')
+        link.gsub!(/href=/,'')
+        html << make_dbpedia_wikipedia_html_links( link )
+        html << '</br>'
+      end 
+      html.html_safe
+
     end
     
   end
