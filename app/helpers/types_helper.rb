@@ -14,7 +14,7 @@ module TypesHelper
     if is_dbpedia? label
       make_dbpedia_wikipedia_html_links label
     elsif label.match("^http://")
-      link_to "#{label} <small><i class='icon-share'> </i></small>".html_safe, label, :target => "_blank", :title => "External link"
+      link_to "#{truncate(label, length: 70)} <small><i class='icon-share'> </i></small>".html_safe, label, :target => "_blank", :title => "External link"
     elsif id.blank?
       label
     else
