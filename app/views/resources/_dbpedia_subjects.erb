@@ -1,0 +1,20 @@
+<table class="table table-hover table-condensed table-bordered">
+  
+  <thead>
+  <tr>
+    <th colspan=2> <span class="related-title"><%= image_tag("rdf_flyer.svg", size: "40") %> &nbsp;&nbsp; <%= title %> </span>
+         <span class="pull-right"><%= image_tag("DBpediaLogo.svg", size: "50") %> <%= image_tag("wiki1.svg", size: "50") %> </span>
+    </th>
+  </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td> <%= dbpedia_subjects_link sameAsData.label %>
+      </td>
+      <td> <%= dbpedia_subjects_insert_table sameAsData.label %>
+      </td>
+    </tr>
+  </tbody>
+</table>
+

@@ -2,7 +2,7 @@
   <% value = @resource.attributes.send(:"#{att}") %>
   <% description = Resource::Base.description_of(att)%>
 
-  <td><strong><%= labelize([value].flatten.first.type) %> <%= link_to("<i class='icon-question-sign'></i>".html_safe, resource_path(att), :title => description, :"data-toggle" => "tooltip", :rel => "tooltip") if description %> 
+  <td class="oneliner"><strong><%= labelize([value].flatten.first.type) %> <%= link_to("<i class='icon-question-sign'></i>".html_safe, resource_path(att), :title => description, :"data-toggle" => "tooltip", :rel => "tooltip") if description %> 
     <%#"</br>-----------</br>".html_safe %>
     <%#value.inspect.gsub(', @', ',</br>@').html_safe %>
   </strong></td>
