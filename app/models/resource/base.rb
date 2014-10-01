@@ -266,10 +266,10 @@ EOF
 
   def self.namespaces
    "
-    prefix ms: <http://iula02v.upf.edu:8890/Metashare/ontology/>
-    prefix bio: <http://iula02v.upf.edu:8890/Metashare/services/>
+    prefix ms: <http://lod.iula.upf.edu/Metashare/ontology/>
+    prefix bio: <http://lod.iula.upf.edu/Metashare/services/>
     prefix dc:  <http://purl.org/dc/elements/1.1/>
-    prefix test: <http://iula02v.upf.edu:8890/Metashare/resource/>
+    prefix test: <http://lod.iula.upf.edu/Metashare/resource/>
     prefix foaf:    <http://xmlns.com/foaf/0.1/>
     prefix browser: <http://browser.upf/browser#>
     prefix dcterms:  <http://purl.org/dc/terms/>
