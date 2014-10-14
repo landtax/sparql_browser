@@ -52,7 +52,7 @@ EOF
     all_descriptions = $sparql_cache.fetch('descriptions') do
       descriptions = {}
       self.fetch_descriptions.each do |r|
-        res_id = r[:s].to_s.split("#")[1]
+        res_id = r[:s].to_s.split("/")[-1]
         descriptions[res_id] = r[:description].to_s
       end
       descriptions
@@ -96,7 +96,7 @@ EOF
 
   def self.build_list(solutions)
     solutions.map do |s|
-      id = s[:o].to_s.split("#")[1]
+      id = s[:o].to_s.split("/")[-1]
       label = s[:olabel].to_s
       description = Resource::Base.new(nil, s[:description].to_s, "description", nil, [])
       Resource::Base.new(id, label, nil, nil, [description] )
@@ -134,7 +134,7 @@ EOF
     label = ""
 
     if solution_is_resource?(solution)
-      id = solution[:o].to_s.split("#")[1]
+      id = solution[:o].to_s.split("/")[-1]
       label = solution[:olabel].to_s
     else
       label = solution[:o].to_s
@@ -260,16 +260,16 @@ EOF
 
   def self.from
    "
-      FROM <http://IulaClarinMetadata.edu>
+      FROM <http://MetashareLOD.org>
    "
   end
 
   def self.namespaces
    "
-    prefix ms: <http://purl.org/ms-lod/MetaShare.ttl#>
-    prefix bio: <http://purl.org/ms-lod/BioServices.ttl#>
+    prefix ms: <http://lodserver.iula.upf.edu/Metashare/ontology/>
+    prefix bio: <http://lodserver.iula.upf.edu/Metashare/services/>
     prefix dc:  <http://purl.org/dc/elements/1.1/>
-    prefix test: <http://purl.org/ms-lod/UPF-MetadataRecords.ttl#>
+    prefix test: <http://lodserver.iula.upf.edu/Metashare/resource/>
     prefix foaf:    <http://xmlns.com/foaf/0.1/>
     prefix browser: <http://browser.upf/browser#>
     prefix dcterms:  <http://purl.org/dc/terms/>
@@ -291,7 +291,7 @@ EOF
   def self.solution_is_type?(solution)
     solution[:p].to_s.match(/22-rdf-syntax-ns#type/) &&
       !solution[:olabel].to_s.empty? &&
-      ( solution[:o].to_s.match(/BioServices/) || solution[:o].to_s.match(/bibo\/#/) || solution[:o].to_s.match(/MetaShare/) || solution[:o].to_s.match(/xmlns\.com/))
+      ( solution[:o].to_s.match(/Metashare\/ontology/) || solution[:o].to_s.match(/bibo\/#/) || solution[:o].to_s.match(/Metashare\/services/) || solution[:o].to_s.match(/xmlns\.com/))
   end
 
   def self.solution_is_owl?(solution)

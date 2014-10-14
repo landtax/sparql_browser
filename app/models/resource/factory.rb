@@ -4,7 +4,7 @@ class Resource::Factory
 
   def self.super_class_of subclass
     superclasses = $sparql_cache.fetch('superclass') do
-      sparql_super_classes= find_translations.inject({}) { |ret, s| ret[s[:a].to_s.split("#")[1]] = s[:b].to_s.split("#")[1]; ret }
+      sparql_super_classes= find_translations.inject({}) { |ret, s| ret[s[:a].to_s.split("/")[-1]] = s[:b].to_s.split("/")[-1]; ret }
       ["Service", "Task", "Corpus", "Document", "LexicalConceptualResource", "Project"].each { |t| sparql_super_classes[t] = t }
       sparql_super_classes
     end
